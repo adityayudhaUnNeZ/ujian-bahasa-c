@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LMS Penilaian Individu — Sintaks Dasar & Debugging Bahasa C</title>
+<html lang="id"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LMS Penilaian Individu — Sintaks Dasar &amp; Debugging Bahasa C</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -48,7 +47,7 @@
       animation: pulse-urgent 1.2s infinite;
     }
   </style>
-</head>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.sticky{position:sticky}.inset-0{inset:0px}.bottom-5{bottom:1.25rem}.right-5{right:1.25rem}.top-0{top:0px}.z-30{z-index:30}.z-50{z-index:50}.col-span-2{grid-column:span 2 / span 2}.mx-1{margin-left:0.25rem;margin-right:0.25rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-1\.5{margin-bottom:0.375rem}.mb-2{margin-bottom:0.5rem}.ml-auto{margin-left:auto}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-1\.5{height:0.375rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-3{height:0.75rem}.h-3\.5{height:0.875rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-7{height:1.75rem}.h-px{height:1px}.h-6{height:1.5rem}.h-auto{height:auto}.max-h-\[85vh\]{max-height:85vh}.min-h-screen{min-height:100vh}.w-1\.5{width:0.375rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-28{width:7rem}.w-3{width:0.75rem}.w-3\.5{width:0.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-7{width:1.75rem}.w-full{width:100%}.w-px{width:1px}.w-6{width:1.5rem}.max-w-2xl{max-width:42rem}.max-w-6xl{max-width:72rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-lg{max-width:32rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}.list-inside{list-style-position:inside}.list-decimal{list-style-type:decimal}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.625rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-slate-200 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(226 232 240 / var(--tw-divide-opacity, 1))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-amber-400\/30{border-color:rgb(251 191 36 / 0.3)}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208 / var(--tw-border-opacity, 1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183 / var(--tw-border-opacity, 1))}.border-emerald-400\/30{border-color:rgb(52 211 153 / 0.3)}.border-indigo-200{--tw-border-opacity:1;border-color:rgb(199 210 254 / var(--tw-border-opacity, 1))}.border-indigo-400\/30{border-color:rgb(129 140 248 / 0.3)}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-rose-400\/40{border-color:rgb(251 113 133 / 0.4)}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-white\/15{border-color:rgb(255 255 255 / 0.15)}.border-emerald-400{--tw-border-opacity:1;border-color:rgb(52 211 153 / var(--tw-border-opacity, 1))}.border-emerald-400\/40{border-color:rgb(52 211 153 / 0.4)}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-400\/20{background-color:rgb(251 191 36 / 0.2)}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235 / var(--tw-bg-opacity, 1))}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-emerald-100{--tw-bg-opacity:1;background-color:rgb(209 250 229 / var(--tw-bg-opacity, 1))}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.bg-emerald-50{--tw-bg-opacity:1;background-color:rgb(236 253 245 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/70{background-color:rgb(236 253 245 / 0.7)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-500\/20{background-color:rgb(16 185 129 / 0.2)}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-indigo-100{--tw-bg-opacity:1;background-color:rgb(224 231 255 / var(--tw-bg-opacity, 1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-indigo-500\/20{background-color:rgb(99 102 241 / 0.2)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133 / var(--tw-bg-opacity, 1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.bg-rose-500\/20{background-color:rgb(244 63 94 / 0.2)}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/90{background-color:rgb(30 41 59 / 0.9)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/60{background-color:rgb(15 23 42 / 0.6)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-emerald-400\/20{background-color:rgb(52 211 153 / 0.2)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-emerald-900{--tw-gradient-from:#064e3b var(--tw-gradient-from-position);--tw-gradient-to:rgb(6 78 59 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-indigo-600{--tw-gradient-from:#4f46e5 var(--tw-gradient-from-position);--tw-gradient-to:rgb(79 70 229 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-900{--tw-gradient-from:#0f172a var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 23 42 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-blue-700{--tw-gradient-to:#1d4ed8 var(--tw-gradient-to-position)}.to-indigo-950{--tw-gradient-to:#1e1b4b var(--tw-gradient-to-position)}.to-teal-900{--tw-gradient-to:#134e4a var(--tw-gradient-to-position)}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-2{padding:0.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-7{padding-top:1.75rem;padding-bottom:1.75rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.pb-2{padding-bottom:0.5rem}.pb-3{padding-bottom:0.75rem}.pt-1{padding-top:0.25rem}.pt-2{padding-top:0.5rem}.pb-2\.5{padding-bottom:0.625rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-sans{font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}.text-2xl{font-size:1.5rem;line-height:2rem}.text-5xl{font-size:3rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.text-emerald-100{--tw-text-opacity:1;color:rgb(209 250 229 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-emerald-900{--tw-text-opacity:1;color:rgb(6 78 59 / var(--tw-text-opacity, 1))}.text-emerald-950{--tw-text-opacity:1;color:rgb(2 44 34 / var(--tw-text-opacity, 1))}.text-indigo-100{--tw-text-opacity:1;color:rgb(224 231 255 / var(--tw-text-opacity, 1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202 / var(--tw-text-opacity, 1))}.text-indigo-800{--tw-text-opacity:1;color:rgb(55 48 163 / var(--tw-text-opacity, 1))}.text-indigo-950{--tw-text-opacity:1;color:rgb(30 27 75 / var(--tw-text-opacity, 1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175 / var(--tw-text-opacity, 1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60 / var(--tw-text-opacity, 1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-amber-950{--tw-text-opacity:1;color:rgb(69 26 3 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-indigo-400{--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.text-pink-300{--tw-text-opacity:1;color:rgb(249 168 212 / var(--tw-text-opacity, 1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133 / var(--tw-text-opacity, 1))}.text-emerald-200{--tw-text-opacity:1;color:rgb(167 243 208 / var(--tw-text-opacity, 1))}.accent-indigo-600{accent-color:#4f46e5}.accent-rose-600{accent-color:#e11d48}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-amber-100:hover{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-100:hover{--tw-bg-opacity:1;background-color:rgb(209 250 229 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-400:hover{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-100:hover{--tw-bg-opacity:1;background-color:rgb(224 231 255 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-500:hover{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-100:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-900:hover{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.hover\:bg-white\/20:hover{background-color:rgb(255 255 255 / 0.2)}.hover\:bg-amber-400:hover{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-50:hover{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.hover\:text-slate-600:hover{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:border-indigo-500:focus{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-emerald-600:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(5 150 105 / var(--tw-ring-opacity, 1))}.focus\:ring-indigo-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(99 102 241 / var(--tw-ring-opacity, 1))}.disabled\:pointer-events-none:disabled{pointer-events:none}.disabled\:opacity-40:disabled{opacity:0.4}@media (min-width: 640px){.sm\:col-span-4{grid-column:span 4 / span 4}.sm\:h-24{height:6rem}.sm\:w-auto{width:auto}.sm\:w-px{width:1px}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:justify-start{justify-content:flex-start}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 1024px){.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-6{grid-column:span 6 / span 6}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:col-span-8{grid-column:span 8 / span 8}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}}</style></head>
 <body class="min-h-screen flex flex-col">
 
   <!-- TOP NAVBAR -->
@@ -86,14 +85,14 @@
 
       <!-- Mode Switcher Buttons -->
       <div class="flex items-center gap-2">
-        <button id="btn-nav-student" type="button" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-500 transition flex items-center gap-1.5">
+        <button id="btn-nav-student" type="button" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition flex items-center gap-1.5">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
             <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
           </svg>
           <span>Portal Siswa</span>
         </button>
-        <button id="btn-nav-teacher" type="button" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition flex items-center gap-1.5">
+        <button id="btn-nav-teacher" type="button" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-amber-500 text-slate-950 hover:bg-amber-400 transition flex items-center gap-1.5">
           <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
             <path d="M7 11V7a5 5 0 0110 0v4"></path>
@@ -105,9 +104,9 @@
   </header>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toast-container" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3">
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 max-w-sm bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3 hidden">
     <span id="toast-icon" class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
-    <p id="toast-message" class="text-xs sm:text-sm font-medium"></p>
+    <p id="toast-message" class="text-xs sm:text-sm font-medium">Berhasil menarik 0 data nilai siswa dari Google Sheets!</p>
   </div>
 
   <!-- MAIN CONTENT CONTAINER -->
@@ -116,7 +115,7 @@
     <!-- =================================================================== -->
     <!-- VIEW 1: STUDENT LANDING & LOGIN PORTAL                              -->
     <!-- =================================================================== -->
-    <section id="view-student-login" class="space-y-6">
+    <section id="view-student-login" class="space-y-6 hidden">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
         <!-- Left Column: Identity Form -->
@@ -130,13 +129,13 @@
           <form id="form-student-start" class="p-6 space-y-4">
             <div>
               <label for="input-student-name" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Nama Lengkap Siswa <span class="text-rose-500">*</span></label>
-              <input id="input-student-name" type="text" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+              <input id="input-student-name" type="text" required="" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label for="input-student-class" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Kelas <span class="text-rose-500">*</span></label>
-                <input id="input-student-class" type="text" list="class-options" required placeholder="Contoh: X-1 / X TKJ 1" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                <input id="input-student-class" type="text" list="class-options" required="" placeholder="Contoh: X-1 / X TKJ 1" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                 <datalist id="class-options">
                   <option value="X-1"></option>
                   <option value="X-2"></option>
@@ -148,7 +147,7 @@
               </div>
               <div>
                 <label for="input-student-absen" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Nomor Absen <span class="text-rose-500">*</span></label>
-                <input id="input-student-absen" type="number" min="1" max="60" required placeholder="Contoh: 12" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                <input id="input-student-absen" type="number" min="1" max="60" required="" placeholder="Contoh: 12" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
               </div>
             </div>
 
@@ -172,7 +171,7 @@
                 <p class="text-[11px] text-slate-500 font-medium">Tampilan Hasil</p>
                 <p class="text-sm font-bold text-amber-600 mt-0.5">Skor Akhir Saja</p>
               </div>
-              <div id="student-cloud-status-banner" class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-center col-span-2 sm:col-span-4 hidden">
+              <div id="student-cloud-status-banner" class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-center col-span-2 sm:col-span-4">
                 <p class="text-[11px] text-emerald-800 font-semibold flex items-center justify-center gap-1.5">
                   <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                   <span>Terhubung ke Google Sheets Guru: Nilai akan terkirim otomatis saat ujian selesai.</span>
@@ -407,7 +406,7 @@
               <span class="text-[11px] text-emerald-600 font-medium">✓ Tersimpan otomatis di perangkat ini</span>
             </div>
             <p class="text-xs text-slate-500">Jika kamu mengerjakan di HP/laptop pribadi, salin kode bukti di bawah ini dan kirimkan ke Guru agar nilaimu dapat langsung diimpor ke tabel rekapitulasi kelas:</p>
-            <textarea id="result-token-textarea" readonly rows="2" class="w-full p-2.5 rounded-lg bg-white border border-slate-300 font-mono-code text-[11px] text-slate-700 focus:outline-none"></textarea>
+            <textarea id="result-token-textarea" readonly="" rows="2" class="w-full p-2.5 rounded-lg bg-white border border-slate-300 font-mono-code text-[11px] text-slate-700 focus:outline-none"></textarea>
             <div class="flex flex-wrap gap-2 pt-1">
               <button id="btn-copy-token" type="button" class="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition">
                 Salin Kode Bukti Nilai
@@ -427,7 +426,7 @@
     <!-- =================================================================== -->
     <!-- VIEW 4: TEACHER DASHBOARD (PIN PROTECTED)                           -->
     <!-- =================================================================== -->
-    <section id="view-teacher-dashboard" class="hidden space-y-6">
+    <section id="view-teacher-dashboard" class="space-y-6">
       <!-- Teacher Header Banner -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -440,37 +439,37 @@
 
         <!-- Teacher Sub-navigation Tabs -->
         <div class="flex flex-wrap items-center gap-2">
-          <button id="tab-btn-rekap" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white transition">
+          <button id="tab-btn-rekap" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
             1. Rekapitulasi Nilai Siswa
           </button>
           <button id="tab-btn-kunci" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
             2. Kunci Jawaban &amp; Pembahasan (15 Soal)
           </button>
-          <button id="tab-btn-setting" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+          <button id="tab-btn-setting" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white transition">
             3. Pengaturan Ujian &amp; PIN
           </button>
         </div>
       </div>
 
       <!-- SUB-VIEW 4A: REKAPITULASI NILAI SISWA -->
-      <div id="teacher-subview-rekap" class="space-y-6">
+      <div id="teacher-subview-rekap" class="space-y-6 hidden">
         <!-- Summary Metrics -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
             <p class="text-xs text-slate-500 font-medium">Total Siswa Masuk</p>
-            <p id="stat-total-students" class="text-2xl font-extrabold text-slate-900 mt-1">0</p>
+            <p id="stat-total-students" class="text-2xl font-extrabold text-slate-900 mt-1">2</p>
           </div>
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
             <p class="text-xs text-slate-500 font-medium">Rata-rata Kelas</p>
-            <p id="stat-avg-score" class="text-2xl font-extrabold text-indigo-600 mt-1">0.0</p>
+            <p id="stat-avg-score" class="text-2xl font-extrabold text-indigo-600 mt-1">43.5</p>
           </div>
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
             <p class="text-xs text-slate-500 font-medium">Skor Tertinggi</p>
-            <p id="stat-max-score" class="text-2xl font-extrabold text-emerald-600 mt-1">0</p>
+            <p id="stat-max-score" class="text-2xl font-extrabold text-emerald-600 mt-1">87</p>
           </div>
           <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
             <p class="text-xs text-slate-500 font-medium">Ketuntasan (≥ KKM)</p>
-            <p id="stat-pass-rate" class="text-2xl font-extrabold text-amber-600 mt-1">0%</p>
+            <p id="stat-pass-rate" class="text-2xl font-extrabold text-amber-600 mt-1">50%</p>
           </div>
         </div>
 
@@ -478,10 +477,10 @@
         <div class="bg-gradient-to-r from-emerald-900 to-teal-900 text-white rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <div class="space-y-1">
             <div class="flex items-center gap-2">
-              <span id="teacher-gsheet-indicator" class="px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold">Belum Dikonfigurasi</span>
+              <span id="teacher-gsheet-indicator" class="px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 text-[11px] font-bold">✓ Terhubung ke Google Sheets</span>
               <h3 class="text-sm sm:text-base font-bold">Sinkronisasi Otomatis Google Sheets (Lintas Perangkat)</h3>
             </div>
-            <p id="teacher-gsheet-desc" class="text-xs text-emerald-100">Hubungkan URL Web App Google Sheets di tab <strong>3. Pengaturan Ujian &amp; PIN</strong> agar nilai dari HP/laptop murid masuk otomatis ke dashboard ini.</p>
+            <p id="teacher-gsheet-desc" class="text-xs text-emerald-100">Koneksi Google Sheets aktif! Klik "Tarik Data Terbaru dari Google Sheets" untuk memuat seluruh nilai dari perangkat murid.</p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
             <button id="btn-sync-from-gsheet" type="button" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition flex items-center gap-1.5 shadow-sm">
@@ -505,7 +504,7 @@
             </button>
           </div>
           <div class="flex flex-col sm:flex-row gap-2.5">
-            <input id="input-import-token" type="text" placeholder="Tempelkan kode KKA-... dari siswa di sini..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 font-mono-code text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <input id="input-import-token" type="text" placeholder="Tempelkan kode KKA-... dari siswa di sini..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 font-mono-code text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <button id="btn-import-token" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition shrink-0">
               Tambahkan ke Rekapitulasi
             </button>
@@ -517,9 +516,7 @@
           <div class="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3">
               <h3 class="text-sm font-bold text-slate-800">Daftar Nilai Individu Siswa</h3>
-              <select id="filter-class-select" class="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-medium bg-white">
-                <option value="ALL">Semua Kelas</option>
-              </select>
+              <select id="filter-class-select" class="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-medium bg-white"><option value="ALL">Semua Kelas</option><option value="X-4">Kelas X-4</option><option value="X-6">Kelas X-6</option></select>
             </div>
             <div class="flex flex-wrap items-center gap-2">
               <button id="btn-export-csv" type="button" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition">
@@ -547,7 +544,49 @@
                   <th class="py-3 px-4 text-right">Aksi Guru</th>
                 </tr>
               </thead>
-              <tbody id="teacher-rekap-tbody" class="divide-y divide-slate-200 text-xs sm:text-sm"></tbody>
+              <tbody id="teacher-rekap-tbody" class="divide-y divide-slate-200 text-xs sm:text-sm"><tr class="hover:bg-slate-50">
+            <td class="py-3 px-4 font-semibold text-slate-600">1</td>
+            <td class="py-3 px-4 font-bold text-slate-900">Aditya</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold text-xs">X-4</span></td>
+            <td class="py-3 px-4 font-mono-code">6</td>
+            <td class="py-3 px-4 font-mono-code">13 / 15</td>
+            <td class="py-3 px-4 font-extrabold text-indigo-600 text-sm">87</td>
+            <td class="py-3 px-4">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">TUNTAS</span>
+            </td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 text-slate-600">
+                0x 
+              </span>
+            </td>
+            <td class="py-3 px-4 text-xs text-slate-500">12m 19d</td>
+            <td class="py-3 px-4 text-right">
+              <button type="button" data-rec-id="REC-1793067503061-825" class="btn-inspect-student px-3 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition">
+                Detail Jawaban
+              </button>
+            </td>
+          </tr><tr class="hover:bg-slate-50">
+            <td class="py-3 px-4 font-semibold text-slate-600">2</td>
+            <td class="py-3 px-4 font-bold text-slate-900">Heru</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold text-xs">X-6</span></td>
+            <td class="py-3 px-4 font-mono-code">14</td>
+            <td class="py-3 px-4 font-mono-code">0 / 15</td>
+            <td class="py-3 px-4 font-extrabold text-indigo-600 text-sm">0</td>
+            <td class="py-3 px-4">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800">REMEDIAL</span>
+            </td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100 text-rose-700">
+                3x (Diskualifikasi)
+              </span>
+            </td>
+            <td class="py-3 px-4 text-xs text-slate-500">0m 20d</td>
+            <td class="py-3 px-4 text-right">
+              <button type="button" data-rec-id="REC-1793068176352-319" class="btn-inspect-student px-3 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition">
+                Detail Jawaban
+              </button>
+            </td>
+          </tr></tbody>
             </table>
           </div>
         </div>
@@ -559,22 +598,751 @@
           <span><strong>Panduan Guru:</strong> Halaman ini menampilkan ke-15 soal beserta ilustrasi visual, kunci jawaban, dan analisis <em>debugging</em> untuk dibahas di depan kelas setelah seluruh siswa selesai mengerjakan.</span>
           <span class="font-bold">Total: 15 Soal (Skor @ 6,67 Poin = 100)</span>
         </div>
-        <div id="teacher-answer-key-list" class="space-y-4"></div>
+        <div id="teacher-answer-key-list" class="space-y-4"><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q1 (Urutan Standar #1)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Tipe Data Primitif</span>
+            </div>
+            <div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-xl bg-slate-900 text-white font-mono-code text-xs">
+              <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700">
+                <span class="text-[10px] text-indigo-300 block">Data 1: Usia</span>
+                <span class="font-bold text-sm text-white">10</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700">
+                <span class="text-[10px] text-amber-300 block">Data 2: Suhu Tubuh</span>
+                <span class="font-bold text-sm text-white">38.2</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700">
+                <span class="text-[10px] text-emerald-300 block">Data 3: Inisial Kelas</span>
+                <span class="font-bold text-sm text-white">'A'</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700">
+                <span class="text-[10px] text-pink-300 block">Data 4: Status Member</span>
+                <span class="font-bold text-sm text-white">true</span>
+              </div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Perhatikan keempat kartu nilai data di atas! Manakah deklarasi variabel dalam Bahasa C yang paling tepat untuk menyimpan keempat data tersebut secara berurutan?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>float usia = 10; int suhu = 38.2; char inisial = 'A'; int member = true;</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">B</span>
+                <span>int usia = 10; float suhu = 38.2; char inisial = 'A'; bool member = true;</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>int usia = 10; int suhu = 38.2; string inisial = 'A'; boolean member = true;</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>char usia = 10; double suhu = 38.2; float inisial = 'A'; bool member = true;</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Angka bulat (10) menggunakan int, angka desimal (38.2) menggunakan float/double, satu karakter tunggal ('A') menggunakan char, dan status benar/salah (true) menggunakan bool (dengan #include <stdbool.h>).
+            </stdbool.h></div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q2 (Urutan Standar #2)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Aturan Variabel</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div class="text-slate-400 mb-1">// Manakah deklarasi nama variabel yang MELANGGAR aturan wajib?</div>
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> total_bayar = <span class="text-amber-300">50000</span>;</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-400">2 |</span> <span class="text-indigo-400">int</span> 1_harga_tiket = <span class="text-amber-300">50000</span>;</div>
+              <div><span class="text-slate-500">3 |</span> <span class="text-indigo-400">float</span> suhu_tubuh = <span class="text-amber-300">38.2</span>;</div>
+              <div><span class="text-slate-500">4 |</span> <span class="text-indigo-400">int</span> lamaParkir = <span class="text-amber-300">3</span>;</div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Berdasarkan 5 aturan wajib penamaan variabel, mengapa baris ke-2 (int 1_harga_tiket = 50000;) pada potongan kode di atas menyebabkan error pada Bahasa C?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>Karena nama variabel menggunakan tanda garis bawah (underscore).</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>Karena nilai 50000 terlalu besar untuk disimpan di dalam tipe data int.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">C</span>
+                <span>Karena nama variabel wajib dimulai dengan huruf abjad (atau underscore), tidak boleh dimulai dengan angka.</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Karena nama variabel dalam Bahasa C wajib ditulis menggunakan huruf kapital seluruhnya.</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Sesuai aturan wajib variabel: nama variabel harus dimulai dengan huruf abjad dan tidak diperbolehkan dimulai menggunakan angka atau simbol khusus.
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q3 (Urutan Standar #3)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Operator Aritmetika</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> hasil_bagi = <span class="text-amber-300">64</span> / <span class="text-amber-300">4</span>;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> sisa_bagi  = <span class="text-amber-300">81</span> % <span class="text-amber-300">5</span>;</div>
+              <div><span class="text-slate-500">3 |</span> printf(<span class="text-emerald-300">"%d dan %d"</span>, hasil_bagi, sisa_bagi);</div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Perhatikan operasi aritmetika pada potongan kode Bahasa C di atas! Berapakah luaran (output) yang ditampilkan oleh perintah printf pada baris ke-3?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">A</span>
+                <span>16 dan 1</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>16 dan 16</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>60 dan 4</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>15 dan 0</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Operator / melakukan pembagian (64 / 4 = 16), sedangkan operator % (modulo) menghasilkan sisa pembagian bilangan bulat (81 dibagi 5 menghasilkan 16 dengan sisa 1).
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q4 (Urutan Standar #4)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Kasus Visual Kode C</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> harga = <span class="text-amber-300">50000</span>;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">float</span> diskon = <span class="text-amber-300">0.2</span>;</div>
+              <div><span class="text-slate-500">3 |</span> <span class="text-indigo-400">bool</span> member = <span class="text-amber-300">true</span>;</div>
+              <div><span class="text-slate-500">4 |</span> <span class="text-indigo-400">int</span> potong_harga = harga * diskon;</div>
+              <div><span class="text-slate-500">5 |</span> <span class="text-indigo-400">int</span> total_bayar = harga - potong_harga;</div>
+              <div><span class="text-slate-500">6 |</span> <span class="text-indigo-400">bool</span> dapat_promo = (total_bayar &lt;= <span class="text-amber-300">40000</span>) &amp;&amp; member;</div>
+              <div><span class="text-slate-500">7 |</span> printf(<span class="text-emerald-300">"Total: %d | Promo: %d"</span>, total_bayar, dapat_promo);</div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Berdasarkan kode program Bahasa C pada materi Sintaks 3 Bahasa di atas, berapakah nilai yang tampil di layar saat program dijalankan?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>Total: 10000 | Promo: 0</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">B</span>
+                <span>Total: 40000 | Promo: 1</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>Total: 40000 | Promo: 0</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Total: 50000 | Promo: 1</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> potong_harga = 50000 * 0.2 = 10000. total_bayar = 50000 - 10000 = 40000. Karena (40000 &lt;= 40000) bernilai True DAN member bernilai True, maka dapat_promo bernilai True (ditampilkan sebagai 1 oleh %d di C).
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q5 (Urutan Standar #5)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Input/Output Dasar C</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> x;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-slate-400">// Instruksi untuk membaca input angka bulat dari keyboard ke variabel x</span></div>
+              <div class="code-line-highlight px-1"><span class="text-slate-400">3 |</span> _______________________</div>
+              <div><span class="text-slate-500">4 |</span> printf(<span class="text-emerald-300">"Halo %d"</span>, x);</div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Perintah manakah yang tepat untuk mengisi baris ke-3 agar program Bahasa C dapat menerima masukan angka bulat ke dalam variabel x?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>x = input("Masukkan angka: ");</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>scanf("%d", x);</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">C</span>
+                <span>scanf("%d", &amp;x);</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>System.out.println(x);</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Pada Bahasa C, pembacaan input bilangan bulat menggunakan scanf("%d", &amp;x); di mana simbol ampersand (&amp;) wajib disertakan untuk menunjuk alamat memori dari variabel x.
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q6 (Urutan Standar #6)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Tebak Visual Flowchart</span>
+            </div>
+            <div>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col items-center">
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Diagram Alir Skenario 1: Kasir Diskon Bioskop (Data Uji: usia = 10)</p>
+              <svg viewBox="0 0 520 190" class="w-full max-w-lg h-auto">
+                <rect x="10" y="15" width="135" height="44" rx="8" fill="#1e293b"></rect>
+                <text x="77" y="34" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">harga = 50000</text>
+                <text x="77" y="48" text-anchor="middle" fill="#93c5fd" font-size="10">usia = 10, diskon = 0</text>
+                <line x1="145" y1="37" x2="180" y2="37" stroke="#475569" stroke-width="2"></line>
+                <polygon points="240,8 300,37 240,66 180,37" fill="#4f46e5"></polygon>
+                <text x="240" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">usia &lt; 12 ?</text>
+                <line x1="300" y1="37" x2="345" y2="37" stroke="#16a34a" stroke-width="2"></line>
+                <text x="322" y="30" text-anchor="middle" fill="#16a34a" font-size="9" font-weight="bold">YA</text>
+                <rect x="345" y="15" width="165" height="44" rx="6" fill="#0f766e"></rect>
+                <text x="427" y="34" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">diskon = harga * (0.3 + 0.2)</text>
+                <text x="427" y="48" text-anchor="middle" fill="#ccfbf1" font-size="9">(Diskon 30% + 20%)</text>
+                <line x1="427" y1="59" x2="427" y2="135" stroke="#475569" stroke-width="2"></line>
+                <line x1="240" y1="66" x2="240" y2="135" stroke="#dc2626" stroke-width="2"></line>
+                <text x="258" y="95" fill="#dc2626" font-size="9" font-weight="bold">TIDAK</text>
+                <line x1="240" y1="135" x2="310" y2="135" stroke="#475569" stroke-width="2"></line>
+                <rect x="310" y="115" width="190" height="42" rx="8" fill="#1e293b"></rect>
+                <text x="405" y="134" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="bold">total_bayar = harga - diskon</text>
+                <text x="405" y="148" text-anchor="middle" fill="#fff" font-size="9.5">Cetak total_bayar</text>
+              </svg>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Perhatikan visualisasi Flowchart Skenario 1 (Kasir Diskon Bioskop dengan diskon 30% + 20% untuk usia &lt; 12 tahun) di atas! Dengan data uji usia = 10, berapakah nilai total_bayar yang dicetak oleh program?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>Rp 50.000</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>Rp 35.000</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">C</span>
+                <span>Rp 25.000</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Rp 10.000</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Karena usia = 10 memenuhi syarat (10 &lt; 12 bernilai YA/True), maka diskon = 50000 * (0.30 + 0.20) = 50000 * 0.50 = 25000. Sehingga total_bayar = 50000 - 25000 = Rp 25.000.
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q7 (Urutan Standar #7)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Tebak Visual Flowchart</span>
+            </div>
+            <div>
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col items-center">
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Diagram Alir Skenario 2: Kelayakan Kelulusan Ujian</p>
+              <svg viewBox="0 0 520 165" class="w-full max-w-lg h-auto">
+                <rect x="10" y="55" width="120" height="45" rx="6" fill="#1e293b"></rect>
+                <text x="70" y="74" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">nilai_teori = 80</text>
+                <text x="70" y="89" text-anchor="middle" fill="#93c5fd" font-size="9.5" font-weight="bold">nilai_praktik = 70</text>
+                <line x1="130" y1="77" x2="165" y2="77" stroke="#475569" stroke-width="2"></line>
+                <polygon points="260,30 355,77 260,124 165,77" fill="#4f46e5"></polygon>
+                <text x="260" y="74" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">nilai_teori &gt;= 75 &amp;&amp;</text>
+                <text x="260" y="87" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">nilai_praktik &gt;= 75</text>
+                <line x1="260" y1="30" x2="260" y2="12" stroke="#16a34a" stroke-width="2"></line>
+                <line x1="260" y1="12" x2="390" y2="12" stroke="#16a34a" stroke-width="2"></line>
+                <rect x="390" y="2" width="115" height="30" rx="6" fill="#15803d"></rect>
+                <text x="447" y="21" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">True: "LULUS"</text>
+                <line x1="260" y1="124" x2="260" y2="145" stroke="#dc2626" stroke-width="2"></line>
+                <line x1="260" y1="145" x2="390" y2="145" stroke="#dc2626" stroke-width="2"></line>
+                <rect x="390" y="128" width="115" height="30" rx="6" fill="#b91c1c"></rect>
+                <text x="447" y="147" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">False: "REMEDIAL"</text>
+              </svg>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Perhatikan Flowchart Skenario 2 di atas! Jika diuji dengan nilai_teori = 80 dan nilai_praktik = 70, bagaimanakah hasil evaluasi operator logika &amp;&amp; dan luaran (Expected Output) yang dihasilkan?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>True &amp;&amp; True -&gt; Menghasilkan output "LULUS"</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>True &amp;&amp; False -&gt; Menghasilkan output "LULUS"</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">C</span>
+                <span>True &amp;&amp; False -&gt; Menghasilkan output "REMEDIAL"</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>False &amp;&amp; False -&gt; Menghasilkan output "REMEDIAL"</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Evaluasi kondisi pertama: 80 &gt;= 75 bernilai True. Kondisi kedua: 70 &gt;= 75 bernilai False. Karena menggunakan operator AND (&amp;&amp;) yang hanya bernilai True jika SEMUA kondisi benar, maka True &amp;&amp; False menghasilkan False ("REMEDIAL").
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q8 (Urutan Standar #8)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Debugging: Syntax Error</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> #include &lt;stdio.h&gt;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> main() {</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">3 |</span>     <span class="text-indigo-400">float</span> suhu_tubuh = <span class="text-amber-300">38.2</span></div>
+              <div><span class="text-slate-500">4 |</span>     <span class="text-indigo-400">if</span> (suhu_tubuh &gt; <span class="text-amber-300">37.5</span>) {</div>
+              <div><span class="text-slate-500">5 |</span>         printf(<span class="text-emerald-300">"Status: DEMAM\n"</span>);</div>
+              <div><span class="text-slate-500">6 |</span>     }</div>
+              <div><span class="text-slate-500">7 |</span>     <span class="text-indigo-400">return</span> <span class="text-amber-300">0</span>;</div>
+              <div><span class="text-slate-500">8 |</span> }</div>
+              <div class="mt-2 pt-2 border-t border-slate-700 text-rose-400 text-[11px]">
+                [Compiler Output] main.c:4:5: error: expected ',' or ';' before 'if'
+              </div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Saat perwakilan Tester mengetik kode Skenario 4 di laptop guru, program gagal dikompilasi dan memunculkan pesan error seperti pada layar di atas. Termasuk kategori galat apakah ini dan bagaimana perbaikannya?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>Logical Error — Perbaikannya dengan mengganti tanda &gt; menjadi &lt; pada baris ke-4.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">B</span>
+                <span>Syntax Error — Perbaikannya dengan menambahkan tanda titik koma (;) di akhir baris ke-3.</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>Runtime Error — Perbaikannya dengan mengganti tipe data float menjadi char pada baris ke-3.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Logical Error — Perbaikannya dengan menghapus #include <stdio.h> pada baris ke-1.</stdio.h></span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Lupa menuliskan titik koma (;) di akhir pernyataan baris ke-3 melanggar aturan tata bahasa (sintaksis) Bahasa C sehingga langsung terdeteksi oleh compiler sebagai Syntax Error.
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q9 (Urutan Standar #9)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Debugging: Runtime Error</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> #include &lt;stdio.h&gt;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> main() {</div>
+              <div><span class="text-slate-500">3 |</span>     <span class="text-indigo-400">int</span> lama_parkir;</div>
+              <div><span class="text-slate-500">4 |</span>     printf(<span class="text-emerald-300">"Masukkan jam parkir: "</span>);</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">5 |</span>     scanf(<span class="text-emerald-300">"%d"</span>, lama_parkir);</div>
+              <div><span class="text-slate-500">6 |</span>     printf(<span class="text-emerald-300">"Jam: %d\n"</span>, lama_parkir);</div>
+              <div><span class="text-slate-500">7 |</span>     <span class="text-indigo-400">return</span> <span class="text-amber-300">0</span>;</div>
+              <div><span class="text-slate-500">8 |</span> }</div>
+              <div class="mt-2 pt-2 border-t border-slate-700 text-amber-300 text-[11px]">
+                Masukkan jam parkir: 3<br>
+                <span class="text-rose-400">[Process exited: Segmentation fault (core dumped) saat program sedang berjalan]</span>
+              </div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Program di atas berhasil dikompilasi, tetapi begitu pengguna mengetik angka 3 dan menekan Enter, program langsung berhenti mendadak (crash). Berdasarkan materi Debugging, termasuk kategori galat apakah kasus ini?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">A</span>
+                <span>Runtime Error — Karena terjadi ketika program sedang dijalankan akibat lupa menulis simbol &amp; pada scanf("%d", &amp;lama_parkir);</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>Syntax Error — Karena variabel lama_parkir tidak boleh menggunakan huruf kecil.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>Logical Error — Karena program berhasil mencetak hasil akhir namun angkanya keliru.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Hardware Error — Karena keyboard laptop guru tidak memiliki tombol angka 3.</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Kesalahan yang menyebabkan program berhenti mendadak (crash) ketika sedang dieksekusi disebut Runtime Error. Pada bahasa C, lupa menulis &amp; pada scanf membuat program menulis ke alamat memori yang tidak valid.
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q10 (Urutan Standar #10)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Debugging: Logical Error</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div class="text-slate-400">// Skenario 3: Parkir 1 jam pertama Rp 5.000, tiap jam berikutnya Rp 3.000/jam</div>
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> lama_parkir = <span class="text-amber-300">3</span>;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> total_tarif = <span class="text-amber-300">5000</span>;</div>
+              <div><span class="text-slate-500">3 |</span> <span class="text-indigo-400">if</span> (lama_parkir &gt; <span class="text-amber-300">1</span>) {</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">4 |</span>     total_tarif = total_tarif + (lama_parkir * <span class="text-amber-300">3000</span>);</div>
+              <div><span class="text-slate-500">5 |</span> }</div>
+              <div><span class="text-slate-500">6 |</span> printf(<span class="text-emerald-300">"Total Parkir: Rp %d\n"</span>, total_tarif);</div>
+              <div class="mt-2 pt-2 border-t border-slate-700 text-emerald-300 text-[11px]">
+                Expected Output: Total Parkir: Rp 11000 | Actual Output di Laptop: Total Parkir: Rp 14000
+              </div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Program Skenario 3 di atas berjalan lancar tanpa pesan error, tetapi menghasilkan Actual Output Rp 14000 (seharusnya Rp 11000 untuk 3 jam parkir). Jenis galat dan kode perbaikan (Fix Code) baris ke-4 yang tepat adalah...</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>Syntax Error — Ubah baris 4 menjadi: total_tarif = 5000 - 3000;</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">B</span>
+                <span>Logical Error — Ubah baris 4 menjadi: total_tarif = total_tarif + ((lama_parkir - 1) * 3000);</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>Runtime Error — Ubah baris 4 menjadi: total_tarif = lama_parkir / 0;</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Syntax Error — Hapus kurung kurawal pada baris ke-3 dan ke-5.</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Program berjalan tanpa eror namun hasilnya tidak sesuai harapan (Expected Output != Actual Output), sehingga termasuk Logical Error. Karena 1 jam pertama sudah dihitung Rp 5.000, maka jam tambahan adalah (lama_parkir - 1) * 3000.
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q11 (Urutan Standar #11)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Tabel Penelusuran Manual</span>
+            </div>
+            <div>
+            <div class="overflow-x-auto rounded-xl border border-slate-300">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-slate-800 text-white">
+                  <tr>
+                    <th class="p-2">Baris</th>
+                    <th class="p-2">Variabel / Aktivitas (Skenario 5: Bonus Sales)</th>
+                    <th class="p-2">Nilai Baru</th>
+                    <th class="p-2">Keterangan / Kondisi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white">
+                  <tr><td class="p-2 font-bold">1</td><td class="p-2 font-mono-code">gaji_pokok</td><td class="p-2 font-mono-code">3000000</td><td class="p-2">Gaji dasar</td></tr>
+                  <tr><td class="p-2 font-bold">2</td><td class="p-2 font-mono-code">penjualan</td><td class="p-2 font-mono-code">12000000</td><td class="p-2">Input data uji</td></tr>
+                  <tr><td class="p-2 font-bold">3</td><td class="p-2 font-mono-code">bonus</td><td class="p-2 font-mono-code">0</td><td class="p-2">Nilai awal bonus</td></tr>
+                  <tr><td class="p-2 font-bold">4</td><td class="p-2 font-mono-code">if (penjualan &gt;= 10000000)</td><td class="p-2 font-mono-code text-emerald-700 font-bold">True</td><td class="p-2">12.000.000 &gt;= 10.000.000</td></tr>
+                  <tr class="bg-amber-50"><td class="p-2 font-bold">5</td><td class="p-2 font-mono-code">bonus = 500000</td><td class="p-2 font-mono-code font-bold text-indigo-700">[ ? A ? ]</td><td class="p-2">Mendapatkan bonus</td></tr>
+                  <tr class="bg-amber-50"><td class="p-2 font-bold">6</td><td class="p-2 font-mono-code">total_pendapatan = gaji_pokok + bonus</td><td class="p-2 font-mono-code font-bold text-indigo-700">[ ? B ? ]</td><td class="p-2">Total akhir</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Perhatikan Tabel Penelusuran Manual (Manual Tracing) untuk Skenario 5 di atas! Berapakah nilai yang tepat untuk mengisi bagian [ ? A ? ] dan [ ? B ? ]?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>[ ? A ? ] = 0 dan [ ? B ? ] = 3000000</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">B</span>
+                <span>[ ? A ? ] = 500000 dan [ ? B ? ] = 3500000</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>[ ? A ? ] = 500000 dan [ ? B ? ] = 12500000</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>[ ? A ? ] = 10000000 dan [ ? B ? ] = 13000000</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Karena kondisi penjualan &gt;= 10000000 bernilai True (12.000.000 &gt;= 10.000.000), maka variabel bonus berubah menjadi 500000 ([A]), dan total_pendapatan = 3000000 + 500000 = 3500000 ([B]).
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q12 (Urutan Standar #12)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Debugging Operator Logika</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div class="text-slate-400">// Skenario 6: Boleh naik Roller Coaster jika tinggi minimal 140 cm DAN usia minimal 10 tahun</div>
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> tinggi_badan = <span class="text-amber-300">145</span>;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> usia = <span class="text-amber-300">9</span>;</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">3 |</span> <span class="text-indigo-400">if</span> (tinggi_badan &gt;= <span class="text-amber-300">140</span> || usia &gt;= <span class="text-amber-300">10</span>) {</div>
+              <div><span class="text-slate-500">4 |</span>     printf(<span class="text-emerald-300">"Status: BOLEH NAIK\n"</span>);</div>
+              <div><span class="text-slate-500">5 |</span> } <span class="text-indigo-400">else</span> {</div>
+              <div><span class="text-slate-500">6 |</span>     printf(<span class="text-emerald-300">"Status: TIDAK BOLEH NAIK\n"</span>);</div>
+              <div><span class="text-slate-500">7 |</span> }</div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Dengan data uji tinggi_badan = 145 dan usia = 9, seharusnya output adalah "TIDAK BOLEH NAIK". Namun kode di atas justru mencetak "BOLEH NAIK". Apa penyebab kesalahan logika pada baris ke-3?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">A</span>
+                <span>Karena penulis kode menggunakan operator OR (||) yang bernilai True jika salah satu syarat terpenuhi, seharusnya menggunakan operator AND (&amp;&amp;).</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>Karena penulis kode menggunakan tanda &gt;=, seharusnya menggunakan tanda !=.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>Karena nilai tinggi_badan = 145 lebih kecil dari 140.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Karena tipe data int tidak bisa dibandingkan menggunakan operator relasional.</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Operator || (OR) menghasilkan True jika salah satu kondisi benar (145 &gt;= 140 bernilai True). Karena aturan wahana mewajibkan KEDUA syarat terpenuhi sekaligus, maka wajib menggunakan operator &amp;&amp; (AND).
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q13 (Urutan Standar #13)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Debugging Format Output</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">float</span> total_bayar = <span class="text-amber-300">40000.50</span>;</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">2 |</span> printf(<span class="text-emerald-300">"Total Bayar: Rp %d\n"</span>, total_bayar);</div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Ketika kode di atas dijalankan, nilai total_bayar yang bertipe float tidak tampil sebagai 40000.50 melainkan angka acak yang keliru. Bagaimana cara memperbaiki baris ke-2?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">A</span>
+                <span>Mengganti format specifier %d menjadi %.2f karena variabel total_bayar bertipe float (angka desimal).</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>Mengganti perintah printf menjadi scanf.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>Menghapus tanda kutip dua pada teks di dalam printf.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Menambahkan simbol &amp;&amp; di depan variabel total_bayar.</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Format specifier %d hanya diperuntukkan bagi bilangan bulat (int). Untuk menampilkan nilai bertipe float atau double dengan dua angka di belakang koma, gunakan %.2f.
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q14 (Urutan Standar #14)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Komparasi Sintaks 3 Bahasa</span>
+            </div>
+            <div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 font-mono-code text-[11px]">
+              <div class="p-3 rounded-xl bg-slate-900 text-slate-200 border border-slate-700">
+                <span class="text-indigo-400 font-bold block mb-1">Kartu Kode X</span>
+                harga = 50000<br>
+                member = True<br>
+                print(f"Rp {harga}")
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900 text-slate-200 border border-slate-700">
+                <span class="text-amber-400 font-bold block mb-1">Kartu Kode Y</span>
+                int harga = 50000;<br>
+                bool member = true;<br>
+                printf("Rp %d", harga);
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900 text-slate-200 border border-slate-700">
+                <span class="text-emerald-400 font-bold block mb-1">Kartu Kode Z</span>
+                int harga = 50000;<br>
+                boolean member = true;<br>
+                System.out.println(harga);
+              </div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Perhatikan ketiga Kartu Kode di atas! Berdasarkan materi Sintaks 3 Bahasa, manakah urutan nama bahasa pemrograman yang tepat untuk Kartu X, Kartu Y, dan Kartu Z?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">A</span>
+                <span>X = C, Y = Python, Z = Java</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">B</span>
+                <span>X = Python, Y = C, Z = Java</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>X = Java, Y = C, Z = Python</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>X = Python, Y = Java, Z = C</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Kartu X adalah Python (tanpa deklarasi tipe data, tanpa titik koma, menggunakan print(f"...")), Kartu Y adalah Bahasa C (menggunakan bool dan printf), sedangkan Kartu Z adalah Java (menggunakan boolean dan System.out.println).
+            </div>
+          </div><div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal Q15 (Urutan Standar #15)</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Debugging Kondisi Percabangan</span>
+            </div>
+            <div>
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> status_member = <span class="text-amber-300">0</span>; <span class="text-slate-400">// 0 = Bukan Member, 1 = Member</span></div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">2 |</span> <span class="text-indigo-400">if</span> (status_member = <span class="text-amber-300">1</span>) {</div>
+              <div><span class="text-slate-500">3 |</span>     printf(<span class="text-emerald-300">"Selamat, Anda Dapat Diskon Member!\n"</span>);</div>
+              <div><span class="text-slate-500">4 |</span> } <span class="text-indigo-400">else</span> {</div>
+              <div><span class="text-slate-500">5 |</span>     printf(<span class="text-emerald-300">"Harga Normal\n"</span>);</div>
+              <div><span class="text-slate-500">6 |</span> }</div>
+            </div>
+          </div>
+            <p class="text-sm font-semibold text-slate-800">Walaupun status_member bernilai 0 (Bukan Member), program di atas selalu mencetak "Selamat, Anda Dapat Diskon Member!". Apa penyebab bug pada baris ke-2 dan bagaimana memperbaikinya?</p>
+            <div class="space-y-1.5">
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-emerald-50 border-emerald-400 text-emerald-950 font-bold">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-emerald-600 text-white">A</span>
+                <span>Baris ke-2 menggunakan operator pengisian nilai (=) bukan operator relasional sama dengan (==), sehingga status_member diisi menjadi 1 (True). Perbaikannya: if (status_member == 1).</span>
+                <span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">B</span>
+                <span>Baris ke-2 menggunakan angka 1, seharusnya menggunakan angka 100.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">C</span>
+                <span>Tipe data int tidak bisa digunakan di dalam kurung if pada Bahasa C.</span>
+                
+              </div>
+            
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 bg-slate-50 border-slate-200 text-slate-600">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold bg-slate-200 text-slate-700">D</span>
+                <span>Perintah printf pada baris ke-3 harus diganti menjadi scanf.</span>
+                
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> Dalam Bahasa C, satu tanda sama dengan (=) adalah assignment (mengubah nilai variabel menjadi 1 yang dievaluasi sebagai True), sedangkan untuk membandingkan kesamaan dua nilai wajib menggunakan dua tanda sama dengan (==).
+            </div>
+          </div></div>
       </div>
 
       <!-- SUB-VIEW 4C: PENGATURAN UJIAN, PIN GURU, & INTEGRASI GOOGLE SHEETS -->
-      <div id="teacher-subview-setting" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div id="teacher-subview-setting" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <form id="form-teacher-settings" class="lg:col-span-6 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
           <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2">Pengaturan Parameter Ujian &amp; Keamanan Mode Guru</h3>
 
           <div>
             <label for="setting-duration" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Durasi Timer Ujian (Menit)</label>
-            <input id="setting-duration" type="number" min="5" max="120" required value="30" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm" />
+            <input id="setting-duration" type="number" min="5" max="120" required="" value="30" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm">
           </div>
 
           <div>
             <label for="setting-kkm" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Batas Nilai Ketuntasan Minimal / KKM (0–100)</label>
-            <input id="setting-kkm" type="number" min="10" max="100" required value="75" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm" />
+            <input id="setting-kkm" type="number" min="10" max="100" required="" value="75" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm">
           </div>
 
           <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
@@ -582,7 +1350,7 @@
               <p class="text-xs font-bold text-slate-800">Acak Urutan Nomor Soal (Randomize)</p>
               <p class="text-[11px] text-slate-500">Setiap siswa mendapatkan urutan nomor soal yang berbeda.</p>
             </div>
-            <input id="setting-shuffle" type="checkbox" checked class="w-4 h-4 accent-indigo-600" />
+            <input id="setting-shuffle" type="checkbox" checked="" class="w-4 h-4 accent-indigo-600">
           </div>
 
           <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
@@ -591,24 +1359,24 @@
                 <p class="text-xs font-bold text-slate-800">Proteksi Anti-Pindah Tab &amp; Keluar Halaman</p>
                 <p class="text-[11px] text-slate-500">Deteksi jika siswa beralih ke tab lain atau aplikasi lain.</p>
               </div>
-              <input id="setting-anticheat-enable" type="checkbox" checked class="w-4 h-4 accent-rose-600" />
+              <input id="setting-anticheat-enable" type="checkbox" checked="" class="w-4 h-4 accent-rose-600">
             </div>
             <div>
               <label for="setting-max-violations" class="block text-xs font-semibold text-slate-600 mb-1">Batas Maksimal Pelanggaran Pindah Tab (Auto-Submit)</label>
-              <input id="setting-max-violations" type="number" min="1" max="10" required value="3" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs" />
+              <input id="setting-max-violations" type="number" min="1" max="10" required="" value="3" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs">
               <p class="text-[10px] text-slate-500 mt-0.5">Jika siswa melanggar melebihi angka ini, ujian langsung dihentikan dan dikumpulkan otomatis.</p>
             </div>
           </div>
 
           <div>
             <label for="setting-pin" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">PIN Akses Mode Guru</label>
-            <input id="setting-pin" type="text" required value="1234" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 font-mono-code text-sm" />
+            <input id="setting-pin" type="text" required="" value="1234" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 font-mono-code text-sm">
             <p class="text-[11px] text-slate-500 mt-1">PIN default adalah <strong>1234</strong>. Ubah jika diperlukan.</p>
           </div>
 
           <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 space-y-2.5">
             <label for="setting-gsheet-url" class="block text-xs font-bold uppercase tracking-wider text-emerald-900">URL Web App Google Apps Script (Google Sheets)</label>
-            <input id="setting-gsheet-url" type="url" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full px-3.5 py-2 rounded-xl border border-emerald-300 font-mono-code text-xs bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            <input id="setting-gsheet-url" type="url" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full px-3.5 py-2 rounded-xl border border-emerald-300 font-mono-code text-xs bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600">
             <p class="text-[11px] text-emerald-800 leading-relaxed">
               Tempelkan URL Web App dari Google Sheets Anda di sini, lalu klik <strong>Simpan Pengaturan Guru</strong>.
             </p>
@@ -637,7 +1405,7 @@
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <p class="text-xs font-bold text-slate-800">Cara A — Bagikan Tautan Ujian Khusus Murid (Tanpa Unggah Ulang GitHub)</p>
               <p class="text-[11px] text-slate-500">Tautan ini sudah menyertakan alamat Google Sheets Anda secara otomatis:</p>
-              <input id="shareable-student-link" type="text" readonly placeholder="Simpan URL Google Sheets terlebih dahulu..." class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 font-mono-code text-[11px] text-slate-700" />
+              <input id="shareable-student-link" type="text" readonly="" placeholder="Simpan URL Google Sheets terlebih dahulu..." class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 font-mono-code text-[11px] text-slate-700">
               <button id="btn-copy-student-link" type="button" class="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition">
                 Salin Tautan Ujian untuk Murid
               </button>
@@ -667,7 +1435,7 @@
               <li>Pilih jenis <strong class="text-white">Web app</strong>, ubah <em>Execute as</em> menjadi <strong class="text-white">Me</strong>, dan <em>Who has access</em> menjadi <strong class="text-amber-300">Anyone (Siapa saja)</strong>, lalu klik <strong class="text-white">Deploy</strong> (berikan izin akses/Authorize).</li>
               <li>Salin <strong class="text-emerald-300">Web app URL</strong> (<code class="font-mono-code">https://script.google.com/macros/s/.../exec</code>) lalu tempelkan ke kotak di sebelah kiri!</li>
             </ol>
-            <textarea id="textarea-gas-code" readonly rows="9" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono-code text-[11px] text-emerald-300 focus:outline-none"></textarea>
+            <textarea id="textarea-gas-code" readonly="" rows="9" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono-code text-[11px] text-emerald-300 focus:outline-none"></textarea>
           </div>
         </div>
       </div>
@@ -678,7 +1446,7 @@
   <!-- ===================================================================== -->
   <!-- MODAL 1: PIN AUTHENTICATION FOR TEACHER MODE                          -->
   <!-- ===================================================================== -->
-  <div id="modal-teacher-pin" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+  <div id="modal-teacher-pin" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-base font-bold text-slate-900">Verifikasi PIN Mode Guru</h3>
@@ -686,7 +1454,7 @@
       </div>
       <p class="text-xs text-slate-600 leading-relaxed">Masukkan PIN Guru untuk membuka halaman <strong>Kunci Jawaban</strong> dan <strong>Rekapitulasi Nilai Siswa</strong> (PIN Default: <code class="font-mono-code font-bold text-indigo-600">1234</code>).</p>
       <form id="form-verify-pin" class="space-y-3">
-        <input id="input-pin-code" type="password" placeholder="Masukkan PIN Guru..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center font-mono-code text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <input id="input-pin-code" type="password" placeholder="Masukkan PIN Guru..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center font-mono-code text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500">
         <p id="pin-error-text" class="hidden text-xs text-rose-600 font-semibold text-center">PIN yang dimasukkan salah. Coba lagi (Default: 1234).</p>
         <div class="flex gap-2 pt-1">
           <button id="btn-cancel-pin" type="button" class="flex-1 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-semibold text-xs">Batal</button>
@@ -767,14 +1535,14 @@
 
       // Default embedded settings (automatically updated when Teacher downloads configured index.html)
       const EMBEDDED_DEFAULT_SETTINGS = /*__EMBEDDED_SETTINGS_START__*/ {
-        durationMinutes: 30,
-        kkm: 75,
-        shuffleQuestions: true,
-        teacherPin: '1234',
-        antiCheatEnabled: true,
-        maxViolations: 3,
-        googleSheetUrl: ''
-      } /*__EMBEDDED_SETTINGS_END__*/;
+  "durationMinutes": 30,
+  "kkm": 75,
+  "shuffleQuestions": true,
+  "teacherPin": "777",
+  "antiCheatEnabled": true,
+  "maxViolations": 3,
+  "googleSheetUrl": "https://script.google.com/macros/s/AKfycbzbQgnxvdioGrOJBjUDKmJ641CPV3BMSagHHSOqG40bTDwlabuoLtvwJJa687_awCc/exec"
+} /*__EMBEDDED_SETTINGS_END__*/;
 
       let appSettings = Object.assign({}, EMBEDDED_DEFAULT_SETTINGS);
 
@@ -2512,5 +3280,6 @@
       }
     })();
   </script>
-</body>
-</html>
+
+
+</body></html>
