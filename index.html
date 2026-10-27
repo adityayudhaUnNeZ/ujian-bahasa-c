@@ -172,6 +172,12 @@
                 <p class="text-[11px] text-slate-500 font-medium">Tampilan Hasil</p>
                 <p class="text-sm font-bold text-amber-600 mt-0.5">Skor Akhir Saja</p>
               </div>
+              <div id="student-cloud-status-banner" class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-center col-span-2 sm:col-span-4 hidden">
+                <p class="text-[11px] text-emerald-800 font-semibold flex items-center justify-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>Terhubung ke Google Sheets Guru: Nilai akan terkirim otomatis saat ujian selesai.</span>
+                </p>
+              </div>
               <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-center col-span-2 sm:col-span-4">
                 <p class="text-[11px] text-rose-600 font-semibold flex items-center justify-center gap-1.5">
                   <svg class="w-3.5 h-3.5 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
@@ -380,6 +386,16 @@
             </div>
           </div>
 
+          <div id="result-gsheet-status-box" class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5">
+              <span id="result-gsheet-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+              <span id="result-gsheet-text" class="font-semibold">Nilai telah disimpan.</span>
+            </div>
+            <button id="btn-retry-gsheet" type="button" class="hidden px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shrink-0">
+              Kirim Ulang ke Google Sheets
+            </button>
+          </div>
+
           <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
             <strong>Catatan Akademik:</strong> Sesuai aturan ujian, rincian kunci jawaban dan pembahasan per nomor soal hanya dapat dibuka oleh Guru melalui <strong>Mode Guru (PIN)</strong> agar kerahasiaan soal tetap terjaga bagi seluruh siswa.
           </div>
@@ -458,6 +474,25 @@
           </div>
         </div>
 
+        <!-- Google Sheets Real-Time Sync Bar -->
+        <div class="bg-gradient-to-r from-emerald-900 to-teal-900 text-white rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span id="teacher-gsheet-indicator" class="px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold">Belum Dikonfigurasi</span>
+              <h3 class="text-sm sm:text-base font-bold">Sinkronisasi Otomatis Google Sheets (Lintas Perangkat)</h3>
+            </div>
+            <p id="teacher-gsheet-desc" class="text-xs text-emerald-100">Hubungkan URL Web App Google Sheets di tab <strong>3. Pengaturan Ujian &amp; PIN</strong> agar nilai dari HP/laptop murid masuk otomatis ke dashboard ini.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btn-sync-from-gsheet" type="button" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition flex items-center gap-1.5 shadow-sm">
+              <span>↻ Tarik Data Terbaru dari Google Sheets</span>
+            </button>
+            <button id="btn-goto-gsheet-setup" type="button" class="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition border border-white/15">
+              Atur Koneksi Google Sheets
+            </button>
+          </div>
+        </div>
+
         <!-- Import Student Token Box (Serverless Aggregation) -->
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
@@ -527,9 +562,9 @@
         <div id="teacher-answer-key-list" class="space-y-4"></div>
       </div>
 
-      <!-- SUB-VIEW 4C: PENGATURAN UJIAN & PIN GURU -->
-      <div id="teacher-subview-setting" class="hidden max-w-xl">
-        <form id="form-teacher-settings" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+      <!-- SUB-VIEW 4C: PENGATURAN UJIAN, PIN GURU, & INTEGRASI GOOGLE SHEETS -->
+      <div id="teacher-subview-setting" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <form id="form-teacher-settings" class="lg:col-span-6 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
           <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2">Pengaturan Parameter Ujian &amp; Keamanan Mode Guru</h3>
 
           <div>
@@ -571,12 +606,70 @@
             <p class="text-[11px] text-slate-500 mt-1">PIN default adalah <strong>1234</strong>. Ubah jika diperlukan.</p>
           </div>
 
-          <div class="pt-2">
+          <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 space-y-2.5">
+            <label for="setting-gsheet-url" class="block text-xs font-bold uppercase tracking-wider text-emerald-900">URL Web App Google Apps Script (Google Sheets)</label>
+            <input id="setting-gsheet-url" type="url" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="w-full px-3.5 py-2 rounded-xl border border-emerald-300 font-mono-code text-xs bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+            <p class="text-[11px] text-emerald-800 leading-relaxed">
+              Tempelkan URL Web App dari Google Sheets Anda di sini, lalu klik <strong>Simpan Pengaturan Guru</strong>.
+            </p>
+          </div>
+
+          <div class="pt-2 flex flex-wrap gap-2">
             <button type="submit" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm transition">
               Simpan Pengaturan Guru
             </button>
+            <button id="btn-test-gsheet" type="button" class="px-4 py-2.5 rounded-xl border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs transition">
+              Uji Koneksi Google Sheets
+            </button>
           </div>
         </form>
+
+        <!-- Right Column: Step-by-Step Google Sheets Setup & Shareable Student Link / HTML Downloader -->
+        <div class="lg:col-span-6 space-y-4">
+          <!-- Box 1: Shareable Student URL / Pre-configured index.html for GitHub -->
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-3">
+            <span class="px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 text-[11px] font-bold uppercase tracking-wider">Penting untuk GitHub Pages</span>
+            <h3 class="text-base font-bold text-slate-900">Bagikan Koneksi Google Sheets ke Perangkat Murid</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Setelah Anda menyimpan URL Web App Google Sheets di sebelah kiri, pilih salah satu cara berikut agar HP/laptop murid otomatis mengirim nilai ke Google Sheets Anda:
+            </p>
+
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <p class="text-xs font-bold text-slate-800">Cara A — Bagikan Tautan Ujian Khusus Murid (Tanpa Unggah Ulang GitHub)</p>
+              <p class="text-[11px] text-slate-500">Tautan ini sudah menyertakan alamat Google Sheets Anda secara otomatis:</p>
+              <input id="shareable-student-link" type="text" readonly placeholder="Simpan URL Google Sheets terlebih dahulu..." class="w-full px-3 py-2 rounded-lg bg-white border border-slate-300 font-mono-code text-[11px] text-slate-700" />
+              <button id="btn-copy-student-link" type="button" class="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition">
+                Salin Tautan Ujian untuk Murid
+              </button>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-2">
+              <p class="text-xs font-bold text-emerald-950">Cara B — Unduh File <code class="font-mono-code">index.html</code> Siap Unggah ke GitHub</p>
+              <p class="text-[11px] text-emerald-800">Klik tombol di bawah untuk mengunduh file <code class="font-mono-code">index.html</code> yang sudah tertanam permanen dengan URL Google Sheets dan pengaturan Anda:</p>
+              <button id="btn-download-configured-html" type="button" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shadow-sm">
+                ⬇ Unduh index.html (Tertanam URL Google Sheets)
+              </button>
+            </div>
+          </div>
+
+          <!-- Box 2: Google Apps Script Code Generator -->
+          <div class="bg-slate-900 text-slate-200 rounded-2xl border border-slate-800 shadow-sm p-6 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-amber-400 uppercase tracking-wider">Panduan 2 Menit Pasang Google Sheets</h3>
+              <button id="btn-copy-gas-code" type="button" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition">
+                Salin Kode Apps Script
+              </button>
+            </div>
+            <ol class="list-decimal list-inside space-y-1.5 text-xs text-slate-300 leading-relaxed">
+              <li>Buka <strong class="text-white">Google Sheets</strong> baru di Drive Anda, lalu klik menu <strong class="text-white">Extensions (Ekstensi) → Apps Script</strong>.</li>
+              <li>Hapus kode bawaan, lalu tempelkan kode di bawah ini dan klik ikon <strong class="text-white">Save (Simpan)</strong>.</li>
+              <li>Klik tombol biru <strong class="text-white">Deploy → New deployment</strong>.</li>
+              <li>Pilih jenis <strong class="text-white">Web app</strong>, ubah <em>Execute as</em> menjadi <strong class="text-white">Me</strong>, dan <em>Who has access</em> menjadi <strong class="text-amber-300">Anyone (Siapa saja)</strong>, lalu klik <strong class="text-white">Deploy</strong> (berikan izin akses/Authorize).</li>
+              <li>Salin <strong class="text-emerald-300">Web app URL</strong> (<code class="font-mono-code">https://script.google.com/macros/s/.../exec</code>) lalu tempelkan ke kotak di sebelah kiri!</li>
+            </ol>
+            <textarea id="textarea-gas-code" readonly rows="9" class="w-full p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono-code text-[11px] text-emerald-300 focus:outline-none"></textarea>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -672,21 +765,43 @@
       const STORAGE_KEY_RECORDS = 'kka_lms_c_records_v1';
       const STORAGE_KEY_SETTINGS = 'kka_lms_c_settings_v1';
 
-      let appSettings = {
+      // Default embedded settings (automatically updated when Teacher downloads configured index.html)
+      const EMBEDDED_DEFAULT_SETTINGS = /*__EMBEDDED_SETTINGS_START__*/ {
         durationMinutes: 30,
         kkm: 75,
         shuffleQuestions: true,
         teacherPin: '1234',
         antiCheatEnabled: true,
-        maxViolations: 3
-      };
+        maxViolations: 3,
+        googleSheetUrl: ''
+      } /*__EMBEDDED_SETTINGS_END__*/;
 
-      // Load saved settings safely
+      let appSettings = Object.assign({}, EMBEDDED_DEFAULT_SETTINGS);
+
+      // Load saved settings safely & check URL query parameter ?gs=
       try {
         const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
         if (savedSettings) {
           const parsed = JSON.parse(savedSettings);
+          // Keep embedded googleSheetUrl if local storage didn't have one
+          if (!parsed.googleSheetUrl && EMBEDDED_DEFAULT_SETTINGS.googleSheetUrl) {
+            parsed.googleSheetUrl = EMBEDDED_DEFAULT_SETTINGS.googleSheetUrl;
+          }
           appSettings = Object.assign(appSettings, parsed);
+        }
+      } catch (e) {}
+
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const gsParam = urlParams.get('gs');
+        if (gsParam) {
+          const decodedUrl = decodeURIComponent(gsParam);
+          if (decodedUrl.startsWith('https://script.google.com/')) {
+            appSettings.googleSheetUrl = decodedUrl;
+            try {
+              localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(appSettings));
+            } catch (e) {}
+          }
         }
       } catch (e) {}
 
@@ -1164,9 +1279,194 @@
         }
       }
 
+      const GOOGLE_APPS_SCRIPT_TEMPLATE = [
+        "// === KODE GOOGLE APPS SCRIPT UNTUK KKA-LMS BAHASA C ===",
+        "// Tempelkan di Extensions -> Apps Script pada Google Sheets Anda",
+        "",
+        "function doPost(e) {",
+        "  var lock = LockService.getScriptLock();",
+        "  lock.tryLock(10000);",
+        "  try {",
+        "    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();",
+        "    if (sheet.getLastRow() === 0) {",
+        "      sheet.appendRow(['ID', 'Waktu Selesai', 'Nama Lengkap', 'Kelas', 'No Absen', 'Benar', 'Total Soal', 'Skor Akhir', 'Pelanggaran Tab', 'Diskualifikasi', 'Durasi', 'AnswersJSON']);",
+        "    }",
+        "    var data = JSON.parse(e.postData.contents);",
+        "    sheet.appendRow([",
+        "      data.id || ('REC-' + new Date().getTime()),",
+        "      data.timestamp || new Date().toLocaleString('id-ID'),",
+        "      data.name || '-',",
+        "      data.studentClass || '-',",
+        "      data.absen || '-',",
+        "      data.correct || 0,",
+        "      data.total || 15,",
+        "      data.score || 0,",
+        "      data.violations || 0,",
+        "      data.forcedCheating ? 'YA' : 'TIDAK',",
+        "      data.duration || '-',",
+        "      JSON.stringify(data.answers || {})",
+        "    ]);",
+        "    return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))",
+        "      .setMimeType(ContentService.MimeType.JSON);",
+        "  } catch (err) {",
+        "    return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))",
+        "      .setMimeType(ContentService.MimeType.JSON);",
+        "  } finally {",
+        "    lock.releaseLock();",
+        "  }",
+        "}",
+        "",
+        "function doGet(e) {",
+        "  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();",
+        "  var rows = sheet.getDataRange().getValues();",
+        "  if (rows.length <= 1) {",
+        "    return ContentService.createTextOutput(JSON.stringify({ status: 'ok', records: [] }))",
+        "      .setMimeType(ContentService.MimeType.JSON);",
+        "  }",
+        "  var records = [];",
+        "  for (var i = 1; i < rows.length; i++) {",
+        "    var r = rows[i];",
+        "    var parsedAns = {};",
+        "    try { parsedAns = JSON.parse(r[11] || '{}'); } catch (err) {}",
+        "    records.push({",
+        "      id: String(r[0] || ('ROW-' + i)),",
+        "      timestamp: String(r[1] || ''),",
+        "      name: String(r[2] || ''),",
+        "      studentClass: String(r[3] || ''),",
+        "      absen: String(r[4] || ''),",
+        "      correct: Number(r[5] || 0),",
+        "      total: Number(r[6] || 15),",
+        "      score: Number(r[7] || 0),",
+        "      violations: Number(r[8] || 0),",
+        "      forcedCheating: String(r[9]) === 'YA',",
+        "      duration: String(r[10] || '-'),",
+        "      answers: parsedAns",
+        "    });",
+        "  }",
+        "  return ContentService.createTextOutput(JSON.stringify({ status: 'ok', records: records }))",
+        "    .setMimeType(ContentService.MimeType.JSON);",
+        "}"
+      ].join('\n');
+
+      let lastSubmittedRecord = null;
+
+      function updateShareableLinksUI() {
+        const gsUrl = (appSettings.googleSheetUrl || '').trim();
+        const baseUrl = window.location.href.split('?')[0].split('#')[0];
+        if (gsUrl) {
+          $('shareable-student-link').value = `${baseUrl}?gs=${encodeURIComponent(gsUrl)}`;
+          $('teacher-gsheet-indicator').textContent = '✓ Terhubung ke Google Sheets';
+          $('teacher-gsheet-indicator').className = 'px-2.5 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40 text-[11px] font-bold';
+          $('teacher-gsheet-desc').textContent = 'Koneksi Google Sheets aktif! Klik "Tarik Data Terbaru dari Google Sheets" untuk memuat seluruh nilai dari perangkat murid.';
+        } else {
+          $('shareable-student-link').value = 'Masukkan & simpan URL Web App Google Sheets di sebelah kiri terlebih dahulu...';
+          $('teacher-gsheet-indicator').textContent = 'Belum Dikonfigurasi';
+          $('teacher-gsheet-indicator').className = 'px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold';
+        }
+      }
+
       function updateLoginSpecBadges() {
         $('info-duration-label').textContent = `${appSettings.durationMinutes} Menit`;
         $('info-shuffle-label').textContent = appSettings.shuffleQuestions ? 'Diacak Otomatis' : 'Berurutan';
+        const banner = $('student-cloud-status-banner');
+        if (appSettings.googleSheetUrl && appSettings.googleSheetUrl.trim().startsWith('https://script.google.com/')) {
+          banner.classList.remove('hidden');
+        } else {
+          banner.classList.add('hidden');
+        }
+        updateShareableLinksUI();
+      }
+
+      async function sendRecordToGoogleSheets(record) {
+        const gsUrl = (appSettings.googleSheetUrl || '').trim();
+        const box = $('result-gsheet-status-box');
+        const dot = $('result-gsheet-dot');
+        const txt = $('result-gsheet-text');
+        const retryBtn = $('btn-retry-gsheet');
+
+        if (!gsUrl || !gsUrl.startsWith('https://script.google.com/')) {
+          box.className = 'p-4 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 flex items-center justify-between gap-3';
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-400 shrink-0';
+          txt.textContent = 'Mode Lokal: Nilai disimpan di perangkat ini. Salin Kode Bukti di bawah jika diminta oleh Guru.';
+          retryBtn.classList.add('hidden');
+          return;
+        }
+
+        box.className = 'p-4 rounded-xl bg-indigo-50 border border-indigo-200 text-xs text-indigo-900 flex items-center justify-between gap-3';
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping shrink-0';
+        txt.textContent = 'Sedang mengirim nilai otomatis ke Google Sheets Guru...';
+        retryBtn.classList.add('hidden');
+
+        try {
+          await fetch(gsUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(record)
+          });
+          box.className = 'p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-center justify-between gap-3';
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0';
+          txt.textContent = '✓ Berhasil! Nilai kamu telah terkirim otomatis ke Google Sheets & Dashboard Guru.';
+          retryBtn.classList.add('hidden');
+        } catch (err) {
+          box.className = 'p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-900 flex items-center justify-between gap-3';
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0';
+          txt.textContent = 'Gagal mengirim ke Google Sheets (periksa koneksi internet). Klik Kirim Ulang atau salin Kode Bukti di bawah.';
+          retryBtn.classList.remove('hidden');
+        }
+      }
+
+      async function syncRecordsFromGoogleSheets(showNotification = true) {
+        const gsUrl = (appSettings.googleSheetUrl || '').trim();
+        if (!gsUrl || !gsUrl.startsWith('https://script.google.com/')) {
+          if (showNotification) {
+            showToast('Atur URL Web App Google Sheets terlebih dahulu di tab Pengaturan!', true);
+          }
+          return;
+        }
+
+        const btn = $('btn-sync-from-gsheet');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span>⏳ Menyinkronkan dari Google Sheets...</span>';
+        btn.disabled = true;
+
+        try {
+          const response = await fetch(gsUrl + (gsUrl.includes('?') ? '&' : '?') + 't=' + Date.now(), {
+            method: 'GET',
+            redirect: 'follow'
+          });
+          const data = await response.json();
+          if (data && Array.isArray(data.records)) {
+            // Merge cloud records with local records without duplicates (by id or name+timestamp)
+            const localList = getStudentRecords();
+            const mergedMap = new Map();
+            localList.forEach((r) => {
+              const key = `${r.name}_${r.studentClass}_${r.absen}_${r.score}`;
+              mergedMap.set(key, r);
+            });
+            data.records.forEach((r) => {
+              const key = `${r.name}_${r.studentClass}_${r.absen}_${r.score}`;
+              mergedMap.set(key, r);
+            });
+            const mergedList = Array.from(mergedMap.values());
+            overwriteStudentRecords(mergedList);
+            renderTeacherRekap();
+            if (showNotification) {
+              showToast(`Berhasil menarik ${data.records.length} data nilai siswa dari Google Sheets!`);
+            }
+          } else {
+            if (showNotification) {
+              showToast('Respons Google Sheets belum berisi daftar nilai.', true);
+            }
+          }
+        } catch (err) {
+          if (showNotification) {
+            showToast('Gagal menarik data dari Google Sheets. Pastikan akses Web App disetel ke "Anyone".', true);
+          }
+        } finally {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }
       }
 
       // -------------------------------------------------------------------
@@ -1431,8 +1731,10 @@
           answers: canonicalAnswers
         };
 
-        // Save to localStorage for Teacher Mode
+        // Save to localStorage & automatically send to Teacher's Google Sheets
+        lastSubmittedRecord = record;
         saveStudentRecord(record);
+        sendRecordToGoogleSheets(record);
 
         // Encode portable token so student can also send to teacher across devices
         const tokenPayload = {
@@ -1939,7 +2241,13 @@
             $('setting-pin').value = appSettings.teacherPin;
             $('setting-anticheat-enable').checked = appSettings.antiCheatEnabled !== false;
             $('setting-max-violations').value = appSettings.maxViolations || 3;
+            $('setting-gsheet-url').value = appSettings.googleSheetUrl || '';
+            $('textarea-gas-code').value = GOOGLE_APPS_SCRIPT_TEMPLATE;
+            updateShareableLinksUI();
             switchMainView('view-teacher-dashboard');
+            if (appSettings.googleSheetUrl) {
+              syncRecordsFromGoogleSheets(false);
+            }
             showToast('Berhasil masuk ke Mode Guru.');
           } else {
             $('pin-error-text').classList.remove('hidden');
@@ -2079,6 +2387,7 @@
           const pin = $('setting-pin').value.trim() || '1234';
           const antiCheat = $('setting-anticheat-enable').checked;
           const maxViol = parseInt($('setting-max-violations').value, 10) || 3;
+          const gsUrl = $('setting-gsheet-url').value.trim();
 
           appSettings = {
             durationMinutes: Math.min(120, Math.max(5, dur)),
@@ -2086,7 +2395,8 @@
             shuffleQuestions: shuf,
             teacherPin: pin,
             antiCheatEnabled: antiCheat,
-            maxViolations: Math.max(1, maxViol)
+            maxViolations: Math.max(1, maxViol),
+            googleSheetUrl: gsUrl
           };
           try {
             localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(appSettings));
@@ -2094,7 +2404,104 @@
 
           updateLoginSpecBadges();
           renderTeacherRekap();
-          showToast('Pengaturan ujian & PIN Guru berhasil disimpan!');
+          showToast('Pengaturan ujian & URL Google Sheets berhasil disimpan!');
+        });
+
+        // Retry sending to Google Sheets from student screen
+        $('btn-retry-gsheet').addEventListener('click', () => {
+          if (lastSubmittedRecord) {
+            sendRecordToGoogleSheets(lastSubmittedRecord);
+          }
+        });
+
+        // Sync from Google Sheets button in Teacher Rekap
+        $('btn-sync-from-gsheet').addEventListener('click', () => {
+          syncRecordsFromGoogleSheets(true);
+        });
+
+        // Go to Google Sheets setup tab
+        $('btn-goto-gsheet-setup').addEventListener('click', () => {
+          $('textarea-gas-code').value = GOOGLE_APPS_SCRIPT_TEMPLATE;
+          updateShareableLinksUI();
+          switchTeacherSubTab('teacher-subview-setting');
+        });
+
+        // Test Google Sheets connection
+        $('btn-test-gsheet').addEventListener('click', () => {
+          const url = $('setting-gsheet-url').value.trim();
+          if (!url.startsWith('https://script.google.com/')) {
+            showToast('Masukkan URL Web App Google Script yang valid (https://script.google.com/.../exec)', true);
+            return;
+          }
+          appSettings.googleSheetUrl = url;
+          try {
+            localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(appSettings));
+          } catch (e) {}
+          updateShareableLinksUI();
+          syncRecordsFromGoogleSheets(true);
+        });
+
+        // Copy Google Apps Script Code
+        $('btn-copy-gas-code').addEventListener('click', () => {
+          const el = $('textarea-gas-code');
+          el.value = GOOGLE_APPS_SCRIPT_TEMPLATE;
+          el.select();
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(el.value);
+            } else {
+              document.execCommand('copy');
+            }
+          } catch (err) {
+            try { document.execCommand('copy'); } catch (e) {}
+          }
+          showToast('Kode Google Apps Script berhasil disalin!');
+        });
+
+        // Copy shareable student link with ?gs= parameter
+        $('btn-copy-student-link').addEventListener('click', () => {
+          const url = (appSettings.googleSheetUrl || '').trim();
+          if (!url) {
+            showToast('Simpan URL Web App Google Sheets terlebih dahulu!', true);
+            return;
+          }
+          const inputEl = $('shareable-student-link');
+          inputEl.select();
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(inputEl.value);
+            } else {
+              document.execCommand('copy');
+            }
+          } catch (err) {
+            try { document.execCommand('copy'); } catch (e) {}
+          }
+          showToast('Tautan Ujian Siswa (Terhubung Google Sheets) berhasil disalin!');
+        });
+
+        // Download pre-configured index.html with embedded Google Sheet URL for GitHub Pages
+        $('btn-download-configured-html').addEventListener('click', () => {
+          const gsUrl = $('setting-gsheet-url').value.trim() || appSettings.googleSheetUrl || '';
+          if (!gsUrl.startsWith('https://script.google.com/')) {
+            showToast('Masukkan & simpan URL Web App Google Sheets terlebih dahulu sebelum mengunduh index.html!', true);
+            return;
+          }
+          appSettings.googleSheetUrl = gsUrl;
+          const fullHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+          const updatedHtml = fullHtml.replace(
+            /\/\*__EMBEDDED_SETTINGS_START__\*\/[\s\S]*?\/\*__EMBEDDED_SETTINGS_END__\*\//,
+            '/*__EMBEDDED_SETTINGS_START__*/ ' + JSON.stringify(appSettings, null, 2) + ' /*__EMBEDDED_SETTINGS_END__*/'
+          );
+          const blob = new Blob([updatedHtml], { type: 'text/html;charset=utf-8' });
+          const dlUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = dlUrl;
+          a.download = 'index.html';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(dlUrl);
+          showToast('File index.html (tertanam URL Google Sheets) berhasil diunduh! Silakan unggah ke GitHub Pages.');
         });
       }
 
