@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LMS Penilaian Individu — Sintaks Dasar & Debugging Bahasa C</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .code-window {
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 0.75rem;
+      border: 1px solid #334155;
+      overflow: hidden;
+    }
+    .code-line-highlight {
+      background: rgba(239, 68, 68, 0.22);
+      border-left: 3px solid #ef4444;
+    }
+    .option-card {
+      transition: all 0.16s ease-in-out;
+    }
+    .option-card:hover {
+      border-color: #6366f1;
+      background-color: #f8fafc;
+    }
+    .option-card.selected {
+      border-color: #4f46e5;
+      background-color: #eef2ff;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.18);
+    }
+    @keyframes pulse-urgent {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+    .timer-urgent {
+      animation: pulse-urgent 1.2s infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP NAVBAR -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-mono-code font-bold text-lg shadow-inner">
+          {C}
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-base sm:text-lg tracking-tight">KKA-LMS</span>
+            <span class="text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">Fase E • Kelas X</span>
+          </div>
+          <p class="text-xs text-slate-400">Penilaian Individu: Sintaks Dasar &amp; Debugging Bahasa C</p>
+        </div>
+      </div>
+
+      <!-- Active Exam Timer Badge (Visible only during active exam) -->
+      <div id="navbar-timer-box" class="hidden items-center gap-3 bg-slate-800/90 border border-slate-700 px-3.5 py-1.5 rounded-xl">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span class="text-xs text-slate-300 font-medium">Sisa Waktu:</span>
+        </div>
+        <span id="navbar-timer-text" class="font-mono-code font-bold text-sm sm:text-base text-amber-400">30:00</span>
+      </div>
+
+      <!-- Mode Switcher Buttons -->
+      <div class="flex items-center gap-2">
+        <button id="btn-nav-student" type="button" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-500 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M12 14l9-5-9-5-9 5 9 5z"></path>
+            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+          </svg>
+          <span>Portal Siswa</span>
+        </button>
+        <button id="btn-nav-teacher" type="button" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0110 0v4"></path>
+          </svg>
+          <span>Mode Guru (PIN)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 hidden max-w-sm bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl border border-slate-700 flex items-center gap-3">
+    <span id="toast-icon" class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
+    <p id="toast-message" class="text-xs sm:text-sm font-medium"></p>
+  </div>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6">
+
+    <!-- =================================================================== -->
+    <!-- VIEW 1: STUDENT LANDING & LOGIN PORTAL                              -->
+    <!-- =================================================================== -->
+    <section id="view-student-login" class="space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- Left Column: Identity Form -->
+        <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="bg-gradient-to-r from-indigo-600 to-blue-700 px-6 py-5 text-white">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full mb-2">Asesmen Sumatif Individu</span>
+            <h1 class="text-xl sm:text-2xl font-bold">Ujian Sintaks Dasar &amp; Debugging Bahasa C</h1>
+            <p class="text-xs sm:text-sm text-indigo-100 mt-1">Isi identitas lengkapmu sebelum memulai kuis pilihan ganda &amp; tebak kasus visual.</p>
+          </div>
+
+          <form id="form-student-start" class="p-6 space-y-4">
+            <div>
+              <label for="input-student-name" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Nama Lengkap Siswa <span class="text-rose-500">*</span></label>
+              <input id="input-student-name" type="text" required placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="input-student-class" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Kelas <span class="text-rose-500">*</span></label>
+                <input id="input-student-class" type="text" list="class-options" required placeholder="Contoh: X-1 / X TKJ 1" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                <datalist id="class-options">
+                  <option value="X-1"></option>
+                  <option value="X-2"></option>
+                  <option value="X-3"></option>
+                  <option value="X-4"></option>
+                  <option value="X-5"></option>
+                  <option value="X-6"></option>
+                </datalist>
+              </div>
+              <div>
+                <label for="input-student-absen" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Nomor Absen <span class="text-rose-500">*</span></label>
+                <input id="input-student-absen" type="number" min="1" max="60" required placeholder="Contoh: 12" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+              </div>
+            </div>
+
+            <div id="login-error-msg" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium"></div>
+
+            <!-- Exam Spec Summary Badges -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                <p class="text-[11px] text-slate-500 font-medium">Jumlah Soal</p>
+                <p class="text-sm font-bold text-slate-800 mt-0.5">15 Butir Soal</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                <p class="text-[11px] text-slate-500 font-medium">Batas Waktu</p>
+                <p id="info-duration-label" class="text-sm font-bold text-indigo-600 mt-0.5">30 Menit</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                <p class="text-[11px] text-slate-500 font-medium">Urutan Soal</p>
+                <p id="info-shuffle-label" class="text-sm font-bold text-emerald-600 mt-0.5">Diacak Otomatis</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                <p class="text-[11px] text-slate-500 font-medium">Tampilan Hasil</p>
+                <p class="text-sm font-bold text-amber-600 mt-0.5">Skor Akhir Saja</p>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <button type="submit" class="w-full py-3 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-sm transition flex items-center justify-center gap-2">
+                <span>Mulai Kerjakan Ujian Sekarang</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right Column: Study Quick Reference & Rules -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider">Cakupan Materi Ujian</h2>
+              <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">Bahasa C</span>
+            </div>
+            <ul class="space-y-2.5 text-xs text-slate-600 leading-relaxed">
+              <li class="flex items-start gap-2">
+                <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
+                <span><strong>Tipe Data Primitif &amp; Variabel:</strong> <code class="font-mono-code text-slate-800">int</code>, <code class="font-mono-code text-slate-800">float</code>, <code class="font-mono-code text-slate-800">char</code>, <code class="font-mono-code text-slate-800">bool</code>, serta 5 aturan wajib penamaan variabel.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
+                <span><strong>Operator Pemrograman:</strong> Aritmetika (<code class="font-mono-code text-slate-800">+ - * / %</code>), Relasional (<code class="font-mono-code text-slate-800">== != &gt; &lt; &gt;= &lt;=</code>), dan Logika (<code class="font-mono-code text-slate-800">&amp;&amp; || !</code>).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
+                <span><strong>Sintaks &amp; I/O Bahasa C:</strong> Struktur <code class="font-mono-code text-slate-800">#include &lt;stdio.h&gt;</code>, <code class="font-mono-code text-slate-800">scanf("%d", &amp;x)</code>, dan <code class="font-mono-code text-slate-800">printf()</code>.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
+                <span><strong>Tebak Kasus Visual &amp; Debugging:</strong> Bedah <em>Flowchart</em>, Tabel Penelusuran Manual (<em>Tracing</em>), serta diagnosis <em>Syntax Error</em>, <em>Runtime Error</em>, dan <em>Logical Error</em>.</span>
+              </li>
+            </ul>
+            <div class="pt-2 border-t border-slate-100">
+              <button id="btn-toggle-cheat-sheet" type="button" class="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition flex items-center justify-between">
+                <span>Buka Ringkasan Materi Sebelum Ujian</span>
+                <span id="cheat-sheet-arrow" class="font-bold">▼</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Expandable Flash Review Card -->
+          <div id="box-cheat-sheet" class="hidden bg-slate-900 text-slate-200 rounded-2xl p-5 space-y-3 text-xs border border-slate-800 shadow-sm">
+            <h3 class="font-bold text-amber-400 uppercase tracking-wider text-xs">Ringkasan Kilat Sintaks C &amp; Debugging</h3>
+            <div class="space-y-2">
+              <p><strong class="text-white">• Format Specifier C:</strong> <code class="font-mono-code text-emerald-300">%d</code> untuk <code class="font-mono-code">int</code>, <code class="font-mono-code text-emerald-300">%f</code> / <code class="font-mono-code text-emerald-300">%.2f</code> untuk <code class="font-mono-code">float</code>, <code class="font-mono-code text-emerald-300">%c</code> untuk <code class="font-mono-code">char</code>. Jangan lupa tanda <code class="font-mono-code text-amber-300">&amp;</code> pada <code class="font-mono-code">scanf("%d", &amp;x);</code>.</p>
+              <p><strong class="text-white">• Syntax Error:</strong> Melanggar tata bahasa C (lupa <code class="font-mono-code">;</code>, salah ketik <code class="font-mono-code">prinft</code>, kurung <code class="font-mono-code">{}</code> kurang). Terdeteksi langsung oleh <em>compiler</em>.</p>
+              <p><strong class="text-white">• Runtime Error:</strong> Gagal saat program sedang berjalan (pembagian dengan <code class="font-mono-code">0</code>, lupa <code class="font-mono-code">&amp;</code> pada <code class="font-mono-code">scanf</code> hingga <em>crash</em>).</p>
+              <p><strong class="text-white">• Logical Error:</strong> Program berjalan lancar tanpa pesan eror, tetapi hasil keluaran (<em>Actual Output</em>) salah karena keliru rumus atau tanda relasional/logika.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 2: ACTIVE QUIZ & VISUAL CASE ASSESSMENT                        -->
+    <!-- =================================================================== -->
+    <section id="view-student-exam" class="hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- Main Question Panel -->
+        <div class="lg:col-span-8 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <!-- Question Top Bar -->
+          <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+              <span id="q-number-badge" class="px-3 py-1 rounded-lg bg-indigo-600 text-white font-bold text-xs sm:text-sm">Soal 1 / 15</span>
+              <span id="q-category-badge" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-semibold text-xs">Tebak Kasus Visual</span>
+            </div>
+            <button id="btn-flag-question" type="button" class="px-3 py-1.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 text-xs font-semibold transition flex items-center gap-1.5">
+              <span id="flag-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span id="flag-label">Tandai Ragu-ragu</span>
+            </button>
+          </div>
+
+          <!-- Question Body -->
+          <div class="p-6 space-y-5">
+            <!-- Visual Stimulus Container (Flowchart SVG / Code Window / Tracing Table) -->
+            <div id="q-visual-container" class="hidden"></div>
+
+            <!-- Question Stem Text -->
+            <div id="q-stem-text" class="text-sm sm:text-base font-medium text-slate-800 leading-relaxed"></div>
+
+            <!-- Options List -->
+            <div id="q-options-container" class="space-y-2.5 pt-1"></div>
+          </div>
+
+          <!-- Question Footer Navigation -->
+          <div class="bg-slate-50 border-t border-slate-200 px-6 py-4 flex items-center justify-between gap-3">
+            <button id="btn-prev-q" type="button" class="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs sm:text-sm transition disabled:opacity-40 disabled:pointer-events-none">
+              ← Soal Sebelumnya
+            </button>
+            <div class="flex items-center gap-2">
+              <button id="btn-next-q" type="button" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm transition">
+                Soal Berikutnya →
+              </button>
+              <button id="btn-open-submit-modal" type="button" class="hidden px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm shadow-sm transition">
+                Selesai &amp; Kumpulkan Jawaban ✓
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Sidebar: Student Info & Question Navigator Grid -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <p class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">Peserta Ujian</p>
+                <p id="exam-student-name" class="text-sm font-bold text-slate-800">-</p>
+              </div>
+              <div class="text-right">
+                <span id="exam-student-class" class="inline-block px-2.5 py-0.5 rounded-md bg-indigo-50 text-indigo-700 font-semibold text-xs">-</span>
+                <p id="exam-student-absen" class="text-xs text-slate-500 mt-0.5">Absen: -</p>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-600">Navigasi Nomor Soal</span>
+                <span id="exam-answered-count" class="text-xs font-semibold text-indigo-600">0 / 15 Terjawab</span>
+              </div>
+              <div id="question-nav-grid" class="grid grid-cols-5 gap-2"></div>
+            </div>
+
+            <!-- Legend -->
+            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 text-[11px] text-slate-600">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-indigo-600 inline-block"></span>
+                <span>Dijawab</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-amber-400 inline-block"></span>
+                <span>Ragu-ragu</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-slate-200 border border-slate-300 inline-block"></span>
+                <span>Kosong</span>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <button id="btn-sidebar-submit" type="button" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm transition shadow-sm">
+                Kumpulkan Ujian (Submit)
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 3: STUDENT FINAL SCORE SCREEN (SCORE ONLY, NO ANSWER KEY LEAK) -->
+    <!-- =================================================================== -->
+    <section id="view-student-result" class="hidden max-w-2xl mx-auto">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-gradient-to-r from-slate-900 to-indigo-950 px-6 py-7 text-center text-white">
+          <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-semibold uppercase tracking-wider mb-2">
+            Jawaban Berhasil Dikumpulkan
+          </span>
+          <h2 class="text-xl sm:text-2xl font-bold">Hasil Akhir Penilaian Individu</h2>
+          <p class="text-xs text-slate-300 mt-1">Sintaks Dasar &amp; Debugging Bahasa C</p>
+        </div>
+
+        <div class="p-6 space-y-6">
+          <!-- Score Circle & Summary -->
+          <div class="flex flex-col sm:flex-row items-center justify-around gap-6 p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <div class="text-center">
+              <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Skor Akhir Kamu</p>
+              <div id="result-score-number" class="text-5xl font-extrabold text-indigo-600 tracking-tight">0</div>
+              <span id="result-status-badge" class="inline-block mt-2 px-3 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">TUNTAS</span>
+            </div>
+
+            <div class="w-full sm:w-px h-px sm:h-24 bg-slate-200"></div>
+
+            <div class="space-y-2 text-xs sm:text-sm w-full sm:w-auto">
+              <div class="flex justify-between sm:justify-start gap-4">
+                <span class="text-slate-500 w-28">Nama Siswa:</span>
+                <span id="result-student-name" class="font-bold text-slate-800">-</span>
+              </div>
+              <div class="flex justify-between sm:justify-start gap-4">
+                <span class="text-slate-500 w-28">Kelas / Absen:</span>
+                <span id="result-student-class-absen" class="font-semibold text-slate-800">-</span>
+              </div>
+              <div class="flex justify-between sm:justify-start gap-4">
+                <span class="text-slate-500 w-28">Jawaban Benar:</span>
+                <span id="result-correct-count" class="font-semibold text-slate-800">0 dari 15 Soal</span>
+              </div>
+              <div class="flex justify-between sm:justify-start gap-4">
+                <span class="text-slate-500 w-28">Durasi Kerja:</span>
+                <span id="result-time-spent" class="font-semibold text-slate-800">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
+            <strong>Catatan Akademik:</strong> Sesuai aturan ujian, rincian kunci jawaban dan pembahasan per nomor soal hanya dapat dibuka oleh Guru melalui <strong>Mode Guru (PIN)</strong> agar kerahasiaan soal tetap terjaga bagi seluruh siswa.
+          </div>
+
+          <!-- Token for Offline / Cross-Device Submission to Teacher -->
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <label for="result-token-textarea" class="text-xs font-bold uppercase tracking-wider text-slate-700">Kode Bukti Hasil Ujian (Untuk Rekap Guru)</label>
+              <span class="text-[11px] text-emerald-600 font-medium">✓ Tersimpan otomatis di perangkat ini</span>
+            </div>
+            <p class="text-xs text-slate-500">Jika kamu mengerjakan di HP/laptop pribadi, salin kode bukti di bawah ini dan kirimkan ke Guru agar nilaimu dapat langsung diimpor ke tabel rekapitulasi kelas:</p>
+            <textarea id="result-token-textarea" readonly rows="2" class="w-full p-2.5 rounded-lg bg-white border border-slate-300 font-mono-code text-[11px] text-slate-700 focus:outline-none"></textarea>
+            <div class="flex flex-wrap gap-2 pt-1">
+              <button id="btn-copy-token" type="button" class="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition">
+                Salin Kode Bukti Nilai
+              </button>
+              <button id="btn-download-receipt" type="button" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs transition">
+                Unduh Kartu Bukti (.txt)
+              </button>
+              <button id="btn-reset-new-student" type="button" class="ml-auto px-3.5 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs transition">
+                Kembali ke Halaman Login Siswa Baru
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 4: TEACHER DASHBOARD (PIN PROTECTED)                           -->
+    <!-- =================================================================== -->
+    <section id="view-teacher-dashboard" class="hidden space-y-6">
+      <!-- Teacher Header Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-xs uppercase tracking-wider">Mode Guru Aktif</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Panel Rekapitulasi Nilai &amp; Kunci Jawaban</h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">Kelola rekap nilai siswa tanpa server eksternal, impor kode bukti siswa, dan tampilkan pembahasan soal di kelas.</p>
+        </div>
+
+        <!-- Teacher Sub-navigation Tabs -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="tab-btn-rekap" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white transition">
+            1. Rekapitulasi Nilai Siswa
+          </button>
+          <button id="tab-btn-kunci" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+            2. Kunci Jawaban &amp; Pembahasan (15 Soal)
+          </button>
+          <button id="tab-btn-setting" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+            3. Pengaturan Ujian &amp; PIN
+          </button>
+        </div>
+      </div>
+
+      <!-- SUB-VIEW 4A: REKAPITULASI NILAI SISWA -->
+      <div id="teacher-subview-rekap" class="space-y-6">
+        <!-- Summary Metrics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+            <p class="text-xs text-slate-500 font-medium">Total Siswa Masuk</p>
+            <p id="stat-total-students" class="text-2xl font-extrabold text-slate-900 mt-1">0</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+            <p class="text-xs text-slate-500 font-medium">Rata-rata Kelas</p>
+            <p id="stat-avg-score" class="text-2xl font-extrabold text-indigo-600 mt-1">0.0</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+            <p class="text-xs text-slate-500 font-medium">Skor Tertinggi</p>
+            <p id="stat-max-score" class="text-2xl font-extrabold text-emerald-600 mt-1">0</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+            <p class="text-xs text-slate-500 font-medium">Ketuntasan (≥ KKM)</p>
+            <p id="stat-pass-rate" class="text-2xl font-extrabold text-amber-600 mt-1">0%</p>
+          </div>
+        </div>
+
+        <!-- Import Student Token Box (Serverless Aggregation) -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-bold text-slate-800">Impor Kode Bukti Hasil Siswa (Lintas Perangkat Tanpa Server)</h3>
+              <p class="text-xs text-slate-500">Tempelkan satu atau beberapa Kode Bukti Hasil Ujian yang dikirimkan siswa untuk menggabungkannya ke tabel rekap di bawah.</p>
+            </div>
+            <button id="btn-load-demo-students" type="button" class="px-3 py-1.5 rounded-lg border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition">
+              + Muat Contoh Data Simulasi Siswa
+            </button>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2.5">
+            <input id="input-import-token" type="text" placeholder="Tempelkan kode KKA-... dari siswa di sini..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 font-mono-code text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <button id="btn-import-token" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition shrink-0">
+              Tambahkan ke Rekapitulasi
+            </button>
+          </div>
+        </div>
+
+        <!-- Student Results Table -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <h3 class="text-sm font-bold text-slate-800">Daftar Nilai Individu Siswa</h3>
+              <select id="filter-class-select" class="px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-medium bg-white">
+                <option value="ALL">Semua Kelas</option>
+              </select>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="btn-export-csv" type="button" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition">
+                Unduh Rekap CSV (Excel)
+              </button>
+              <button id="btn-clear-records" type="button" class="px-3.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold text-xs transition">
+                Kosongkan Rekap
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-800 text-white text-xs uppercase tracking-wider">
+                  <th class="py-3 px-4">No</th>
+                  <th class="py-3 px-4">Nama Lengkap</th>
+                  <th class="py-3 px-4">Kelas</th>
+                  <th class="py-3 px-4">No. Absen</th>
+                  <th class="py-3 px-4">Benar</th>
+                  <th class="py-3 px-4">Skor Akhir</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4">Waktu Kerja</th>
+                  <th class="py-3 px-4 text-right">Aksi Guru</th>
+                </tr>
+              </thead>
+              <tbody id="teacher-rekap-tbody" class="divide-y divide-slate-200 text-xs sm:text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-VIEW 4B: KUNCI JAWABAN & PEMBAHASAN LENGKAP -->
+      <div id="teacher-subview-kunci" class="hidden space-y-4">
+        <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-4 text-xs text-indigo-950 flex flex-wrap items-center justify-between gap-2">
+          <span><strong>Panduan Guru:</strong> Halaman ini menampilkan ke-15 soal beserta ilustrasi visual, kunci jawaban, dan analisis <em>debugging</em> untuk dibahas di depan kelas setelah seluruh siswa selesai mengerjakan.</span>
+          <span class="font-bold">Total: 15 Soal (Skor @ 6,67 Poin = 100)</span>
+        </div>
+        <div id="teacher-answer-key-list" class="space-y-4"></div>
+      </div>
+
+      <!-- SUB-VIEW 4C: PENGATURAN UJIAN & PIN GURU -->
+      <div id="teacher-subview-setting" class="hidden max-w-xl">
+        <form id="form-teacher-settings" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+          <h3 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-2">Pengaturan Parameter Ujian &amp; Keamanan Mode Guru</h3>
+
+          <div>
+            <label for="setting-duration" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Durasi Timer Ujian (Menit)</label>
+            <input id="setting-duration" type="number" min="5" max="120" required value="30" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm" />
+          </div>
+
+          <div>
+            <label for="setting-kkm" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Batas Nilai Ketuntasan Minimal / KKM (0–100)</label>
+            <input id="setting-kkm" type="number" min="10" max="100" required value="75" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm" />
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <div>
+              <p class="text-xs font-bold text-slate-800">Acak Urutan Nomor Soal (Randomize)</p>
+              <p class="text-[11px] text-slate-500">Setiap siswa mendapatkan urutan nomor soal yang berbeda.</p>
+            </div>
+            <input id="setting-shuffle" type="checkbox" checked class="w-4 h-4 accent-indigo-600" />
+          </div>
+
+          <div>
+            <label for="setting-pin" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">PIN Akses Mode Guru</label>
+            <input id="setting-pin" type="text" required value="1234" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 font-mono-code text-sm" />
+            <p class="text-[11px] text-slate-500 mt-1">PIN default adalah <strong>1234</strong>. Ubah jika diperlukan.</p>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm transition">
+              Simpan Pengaturan Guru
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: PIN AUTHENTICATION FOR TEACHER MODE                          -->
+  <!-- ===================================================================== -->
+  <div id="modal-teacher-pin" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-900">Verifikasi PIN Mode Guru</h3>
+        <button id="btn-close-pin-modal" type="button" class="text-slate-400 hover:text-slate-600 font-bold text-sm">✕</button>
+      </div>
+      <p class="text-xs text-slate-600 leading-relaxed">Masukkan PIN Guru untuk membuka halaman <strong>Kunci Jawaban</strong> dan <strong>Rekapitulasi Nilai Siswa</strong> (PIN Default: <code class="font-mono-code font-bold text-indigo-600">1234</code>).</p>
+      <form id="form-verify-pin" class="space-y-3">
+        <input id="input-pin-code" type="password" placeholder="Masukkan PIN Guru..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center font-mono-code text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <p id="pin-error-text" class="hidden text-xs text-rose-600 font-semibold text-center">PIN yang dimasukkan salah. Coba lagi (Default: 1234).</p>
+        <div class="flex gap-2 pt-1">
+          <button id="btn-cancel-pin" type="button" class="flex-1 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-semibold text-xs">Batal</button>
+          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs">Buka Mode Guru</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 2: CONFIRM SUBMIT EXAM                                          -->
+  <!-- ===================================================================== -->
+  <div id="modal-confirm-submit" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <h3 class="text-base font-bold text-slate-900">Konfirmasi Pengumpulan Jawaban</h3>
+      <p id="modal-submit-summary" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
+      <div class="flex gap-2.5 pt-2">
+        <button id="btn-cancel-submit" type="button" class="flex-1 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-semibold text-xs sm:text-sm">Periksa Kembali</button>
+        <button id="btn-confirm-final-submit" type="button" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm">Ya, Kumpulkan Sekarang</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: STUDENT ANSWER DETAIL INSPECTOR (TEACHER ONLY)               -->
+  <!-- ===================================================================== -->
+  <div id="modal-student-detail" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        <div>
+          <h3 id="detail-modal-title" class="text-sm sm:text-base font-bold">Rincian Jawaban Siswa</h3>
+          <p id="detail-modal-subtitle" class="text-xs text-slate-300"></p>
+        </div>
+        <button id="btn-close-detail-modal" type="button" class="text-slate-300 hover:text-white font-bold text-sm">✕ Tutup</button>
+      </div>
+      <div id="detail-modal-body" class="p-6 overflow-y-auto space-y-3 text-xs"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION LOGIC & QUESTION BANK                                     -->
+  <!-- ===================================================================== -->
+  <script>
+    (function () {
+      const STORAGE_KEY_RECORDS = 'kka_lms_c_records_v1';
+      const STORAGE_KEY_SETTINGS = 'kka_lms_c_settings_v1';
+
+      let appSettings = {
+        durationMinutes: 30,
+        kkm: 75,
+        shuffleQuestions: true,
+        teacherPin: '1234'
+      };
+
+      // Load saved settings safely
+      try {
+        const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
+        if (savedSettings) {
+          const parsed = JSON.parse(savedSettings);
+          appSettings = Object.assign(appSettings, parsed);
+        }
+      } catch (e) {}
+
+      // -------------------------------------------------------------------
+      // 15 QUESTIONS BANK (PILIHAN GANDA & TEBAK KASUS VISUAL BAHASA C)
+      // -------------------------------------------------------------------
+      const QUESTION_BANK = [
+        {
+          id: 'Q1',
+          category: 'Tipe Data Primitif',
+          visualHtml: `
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-xl bg-slate-900 text-white font-mono-code text-xs">
+              <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700">
+                <span class="text-[10px] text-indigo-300 block">Data 1: Usia</span>
+                <span class="font-bold text-sm text-white">10</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700">
+                <span class="text-[10px] text-amber-300 block">Data 2: Suhu Tubuh</span>
+                <span class="font-bold text-sm text-white">38.2</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700">
+                <span class="text-[10px] text-emerald-300 block">Data 3: Inisial Kelas</span>
+                <span class="font-bold text-sm text-white">'A'</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-800 border border-slate-700">
+                <span class="text-[10px] text-pink-300 block">Data 4: Status Member</span>
+                <span class="font-bold text-sm text-white">true</span>
+              </div>
+            </div>
+          `,
+          stem: 'Perhatikan keempat kartu nilai data di atas! Manakah deklarasi variabel dalam Bahasa C yang paling tepat untuk menyimpan keempat data tersebut secara berurutan?',
+          options: [
+            'float usia = 10; int suhu = 38.2; char inisial = \'A\'; int member = true;',
+            'int usia = 10; float suhu = 38.2; char inisial = \'A\'; bool member = true;',
+            'int usia = 10; int suhu = 38.2; string inisial = \'A\'; boolean member = true;',
+            'char usia = 10; double suhu = 38.2; float inisial = \'A\'; bool member = true;'
+          ],
+          correctIndex: 1,
+          explanation: 'Angka bulat (10) menggunakan int, angka desimal (38.2) menggunakan float/double, satu karakter tunggal (\'A\') menggunakan char, dan status benar/salah (true) menggunakan bool (dengan #include <stdbool.h>).'
+        },
+        {
+          id: 'Q2',
+          category: 'Aturan Variabel',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div class="text-slate-400 mb-1">// Manakah deklarasi nama variabel yang MELANGGAR aturan wajib?</div>
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> total_bayar = <span class="text-amber-300">50000</span>;</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-400">2 |</span> <span class="text-indigo-400">int</span> 1_harga_tiket = <span class="text-amber-300">50000</span>;</div>
+              <div><span class="text-slate-500">3 |</span> <span class="text-indigo-400">float</span> suhu_tubuh = <span class="text-amber-300">38.2</span>;</div>
+              <div><span class="text-slate-500">4 |</span> <span class="text-indigo-400">int</span> lamaParkir = <span class="text-amber-300">3</span>;</div>
+            </div>
+          `,
+          stem: 'Berdasarkan 5 aturan wajib penamaan variabel, mengapa baris ke-2 (int 1_harga_tiket = 50000;) pada potongan kode di atas menyebabkan error pada Bahasa C?',
+          options: [
+            'Karena nama variabel menggunakan tanda garis bawah (underscore).',
+            'Karena nilai 50000 terlalu besar untuk disimpan di dalam tipe data int.',
+            'Karena nama variabel wajib dimulai dengan huruf abjad (atau underscore), tidak boleh dimulai dengan angka.',
+            'Karena nama variabel dalam Bahasa C wajib ditulis menggunakan huruf kapital seluruhnya.'
+          ],
+          correctIndex: 2,
+          explanation: 'Sesuai aturan wajib variabel: nama variabel harus dimulai dengan huruf abjad dan tidak diperbolehkan dimulai menggunakan angka atau simbol khusus.'
+        },
+        {
+          id: 'Q3',
+          category: 'Operator Aritmetika',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> hasil_bagi = <span class="text-amber-300">64</span> / <span class="text-amber-300">4</span>;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> sisa_bagi  = <span class="text-amber-300">81</span> % <span class="text-amber-300">5</span>;</div>
+              <div><span class="text-slate-500">3 |</span> printf(<span class="text-emerald-300">"%d dan %d"</span>, hasil_bagi, sisa_bagi);</div>
+            </div>
+          `,
+          stem: 'Perhatikan operasi aritmetika pada potongan kode Bahasa C di atas! Berapakah luaran (output) yang ditampilkan oleh perintah printf pada baris ke-3?',
+          options: [
+            '16 dan 1',
+            '16 dan 16',
+            '60 dan 4',
+            '15 dan 0'
+          ],
+          correctIndex: 0,
+          explanation: 'Operator / melakukan pembagian (64 / 4 = 16), sedangkan operator % (modulo) menghasilkan sisa pembagian bilangan bulat (81 dibagi 5 menghasilkan 16 dengan sisa 1).'
+        },
+        {
+          id: 'Q4',
+          category: 'Kasus Visual Kode C',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> harga = <span class="text-amber-300">50000</span>;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">float</span> diskon = <span class="text-amber-300">0.2</span>;</div>
+              <div><span class="text-slate-500">3 |</span> <span class="text-indigo-400">bool</span> member = <span class="text-amber-300">true</span>;</div>
+              <div><span class="text-slate-500">4 |</span> <span class="text-indigo-400">int</span> potong_harga = harga * diskon;</div>
+              <div><span class="text-slate-500">5 |</span> <span class="text-indigo-400">int</span> total_bayar = harga - potong_harga;</div>
+              <div><span class="text-slate-500">6 |</span> <span class="text-indigo-400">bool</span> dapat_promo = (total_bayar &lt;= <span class="text-amber-300">40000</span>) &amp;&amp; member;</div>
+              <div><span class="text-slate-500">7 |</span> printf(<span class="text-emerald-300">"Total: %d | Promo: %d"</span>, total_bayar, dapat_promo);</div>
+            </div>
+          `,
+          stem: 'Berdasarkan kode program Bahasa C pada materi Sintaks 3 Bahasa di atas, berapakah nilai yang tampil di layar saat program dijalankan?',
+          options: [
+            'Total: 10000 | Promo: 0',
+            'Total: 40000 | Promo: 1',
+            'Total: 40000 | Promo: 0',
+            'Total: 50000 | Promo: 1'
+          ],
+          correctIndex: 1,
+          explanation: 'potong_harga = 50000 * 0.2 = 10000. total_bayar = 50000 - 10000 = 40000. Karena (40000 <= 40000) bernilai True DAN member bernilai True, maka dapat_promo bernilai True (ditampilkan sebagai 1 oleh %d di C).'
+        },
+        {
+          id: 'Q5',
+          category: 'Input/Output Dasar C',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> x;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-slate-400">// Instruksi untuk membaca input angka bulat dari keyboard ke variabel x</span></div>
+              <div class="code-line-highlight px-1"><span class="text-slate-400">3 |</span> _______________________</div>
+              <div><span class="text-slate-500">4 |</span> printf(<span class="text-emerald-300">"Halo %d"</span>, x);</div>
+            </div>
+          `,
+          stem: 'Perintah manakah yang tepat untuk mengisi baris ke-3 agar program Bahasa C dapat menerima masukan angka bulat ke dalam variabel x?',
+          options: [
+            'x = input("Masukkan angka: ");',
+            'scanf("%d", x);',
+            'scanf("%d", &x);',
+            'System.out.println(x);'
+          ],
+          correctIndex: 2,
+          explanation: 'Pada Bahasa C, pembacaan input bilangan bulat menggunakan scanf("%d", &x); di mana simbol ampersand (&) wajib disertakan untuk menunjuk alamat memori dari variabel x.'
+        },
+        {
+          id: 'Q6',
+          category: 'Tebak Visual Flowchart',
+          visualHtml: `
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col items-center">
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Diagram Alir Skenario 1: Kasir Diskon Bioskop (Data Uji: usia = 10)</p>
+              <svg viewBox="0 0 520 190" class="w-full max-w-lg h-auto">
+                <rect x="10" y="15" width="135" height="44" rx="8" fill="#1e293b" />
+                <text x="77" y="34" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">harga = 50000</text>
+                <text x="77" y="48" text-anchor="middle" fill="#93c5fd" font-size="10">usia = 10, diskon = 0</text>
+                <line x1="145" y1="37" x2="180" y2="37" stroke="#475569" stroke-width="2" />
+                <polygon points="240,8 300,37 240,66 180,37" fill="#4f46e5" />
+                <text x="240" y="40" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">usia &lt; 12 ?</text>
+                <line x1="300" y1="37" x2="345" y2="37" stroke="#16a34a" stroke-width="2" />
+                <text x="322" y="30" text-anchor="middle" fill="#16a34a" font-size="9" font-weight="bold">YA</text>
+                <rect x="345" y="15" width="165" height="44" rx="6" fill="#0f766e" />
+                <text x="427" y="34" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">diskon = harga * (0.3 + 0.2)</text>
+                <text x="427" y="48" text-anchor="middle" fill="#ccfbf1" font-size="9">(Diskon 30% + 20%)</text>
+                <line x1="427" y1="59" x2="427" y2="135" stroke="#475569" stroke-width="2" />
+                <line x1="240" y1="66" x2="240" y2="135" stroke="#dc2626" stroke-width="2" />
+                <text x="258" y="95" fill="#dc2626" font-size="9" font-weight="bold">TIDAK</text>
+                <line x1="240" y1="135" x2="310" y2="135" stroke="#475569" stroke-width="2" />
+                <rect x="310" y="115" width="190" height="42" rx="8" fill="#1e293b" />
+                <text x="405" y="134" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="bold">total_bayar = harga - diskon</text>
+                <text x="405" y="148" text-anchor="middle" fill="#fff" font-size="9.5">Cetak total_bayar</text>
+              </svg>
+            </div>
+          `,
+          stem: 'Perhatikan visualisasi Flowchart Skenario 1 (Kasir Diskon Bioskop dengan diskon 30% + 20% untuk usia < 12 tahun) di atas! Dengan data uji usia = 10, berapakah nilai total_bayar yang dicetak oleh program?',
+          options: [
+            'Rp 50.000',
+            'Rp 35.000',
+            'Rp 25.000',
+            'Rp 10.000'
+          ],
+          correctIndex: 2,
+          explanation: 'Karena usia = 10 memenuhi syarat (10 < 12 bernilai YA/True), maka diskon = 50000 * (0.30 + 0.20) = 50000 * 0.50 = 25000. Sehingga total_bayar = 50000 - 25000 = Rp 25.000.'
+        },
+        {
+          id: 'Q7',
+          category: 'Tebak Visual Flowchart',
+          visualHtml: `
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col items-center">
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Diagram Alir Skenario 2: Kelayakan Kelulusan Ujian</p>
+              <svg viewBox="0 0 520 165" class="w-full max-w-lg h-auto">
+                <rect x="10" y="55" width="120" height="45" rx="6" fill="#1e293b" />
+                <text x="70" y="74" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">nilai_teori = 80</text>
+                <text x="70" y="89" text-anchor="middle" fill="#93c5fd" font-size="9.5" font-weight="bold">nilai_praktik = 70</text>
+                <line x1="130" y1="77" x2="165" y2="77" stroke="#475569" stroke-width="2" />
+                <polygon points="260,30 355,77 260,124 165,77" fill="#4f46e5" />
+                <text x="260" y="74" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">nilai_teori &gt;= 75 &amp;&amp;</text>
+                <text x="260" y="87" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">nilai_praktik &gt;= 75</text>
+                <line x1="260" y1="30" x2="260" y2="12" stroke="#16a34a" stroke-width="2" />
+                <line x1="260" y1="12" x2="390" y2="12" stroke="#16a34a" stroke-width="2" />
+                <rect x="390" y="2" width="115" height="30" rx="6" fill="#15803d" />
+                <text x="447" y="21" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">True: "LULUS"</text>
+                <line x1="260" y1="124" x2="260" y2="145" stroke="#dc2626" stroke-width="2" />
+                <line x1="260" y1="145" x2="390" y2="145" stroke="#dc2626" stroke-width="2" />
+                <rect x="390" y="128" width="115" height="30" rx="6" fill="#b91c1c" />
+                <text x="447" y="147" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="bold">False: "REMEDIAL"</text>
+              </svg>
+            </div>
+          `,
+          stem: 'Perhatikan Flowchart Skenario 2 di atas! Jika diuji dengan nilai_teori = 80 dan nilai_praktik = 70, bagaimanakah hasil evaluasi operator logika && dan luaran (Expected Output) yang dihasilkan?',
+          options: [
+            'True && True -> Menghasilkan output "LULUS"',
+            'True && False -> Menghasilkan output "LULUS"',
+            'True && False -> Menghasilkan output "REMEDIAL"',
+            'False && False -> Menghasilkan output "REMEDIAL"'
+          ],
+          correctIndex: 2,
+          explanation: 'Evaluasi kondisi pertama: 80 >= 75 bernilai True. Kondisi kedua: 70 >= 75 bernilai False. Karena menggunakan operator AND (&&) yang hanya bernilai True jika SEMUA kondisi benar, maka True && False menghasilkan False ("REMEDIAL").'
+        },
+        {
+          id: 'Q8',
+          category: 'Debugging: Syntax Error',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> #include &lt;stdio.h&gt;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> main() {</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">3 |</span>     <span class="text-indigo-400">float</span> suhu_tubuh = <span class="text-amber-300">38.2</span></div>
+              <div><span class="text-slate-500">4 |</span>     <span class="text-indigo-400">if</span> (suhu_tubuh &gt; <span class="text-amber-300">37.5</span>) {</div>
+              <div><span class="text-slate-500">5 |</span>         printf(<span class="text-emerald-300">"Status: DEMAM\\n"</span>);</div>
+              <div><span class="text-slate-500">6 |</span>     }</div>
+              <div><span class="text-slate-500">7 |</span>     <span class="text-indigo-400">return</span> <span class="text-amber-300">0</span>;</div>
+              <div><span class="text-slate-500">8 |</span> }</div>
+              <div class="mt-2 pt-2 border-t border-slate-700 text-rose-400 text-[11px]">
+                [Compiler Output] main.c:4:5: error: expected ',' or ';' before 'if'
+              </div>
+            </div>
+          `,
+          stem: 'Saat perwakilan Tester mengetik kode Skenario 4 di laptop guru, program gagal dikompilasi dan memunculkan pesan error seperti pada layar di atas. Termasuk kategori galat apakah ini dan bagaimana perbaikannya?',
+          options: [
+            'Logical Error — Perbaikannya dengan mengganti tanda > menjadi < pada baris ke-4.',
+            'Syntax Error — Perbaikannya dengan menambahkan tanda titik koma (;) di akhir baris ke-3.',
+            'Runtime Error — Perbaikannya dengan mengganti tipe data float menjadi char pada baris ke-3.',
+            'Logical Error — Perbaikannya dengan menghapus #include <stdio.h> pada baris ke-1.'
+          ],
+          correctIndex: 1,
+          explanation: 'Lupa menuliskan titik koma (;) di akhir pernyataan baris ke-3 melanggar aturan tata bahasa (sintaksis) Bahasa C sehingga langsung terdeteksi oleh compiler sebagai Syntax Error.'
+        },
+        {
+          id: 'Q9',
+          category: 'Debugging: Runtime Error',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> #include &lt;stdio.h&gt;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> main() {</div>
+              <div><span class="text-slate-500">3 |</span>     <span class="text-indigo-400">int</span> lama_parkir;</div>
+              <div><span class="text-slate-500">4 |</span>     printf(<span class="text-emerald-300">"Masukkan jam parkir: "</span>);</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">5 |</span>     scanf(<span class="text-emerald-300">"%d"</span>, lama_parkir);</div>
+              <div><span class="text-slate-500">6 |</span>     printf(<span class="text-emerald-300">"Jam: %d\\n"</span>, lama_parkir);</div>
+              <div><span class="text-slate-500">7 |</span>     <span class="text-indigo-400">return</span> <span class="text-amber-300">0</span>;</div>
+              <div><span class="text-slate-500">8 |</span> }</div>
+              <div class="mt-2 pt-2 border-t border-slate-700 text-amber-300 text-[11px]">
+                Masukkan jam parkir: 3<br/>
+                <span class="text-rose-400">[Process exited: Segmentation fault (core dumped) saat program sedang berjalan]</span>
+              </div>
+            </div>
+          `,
+          stem: 'Program di atas berhasil dikompilasi, tetapi begitu pengguna mengetik angka 3 dan menekan Enter, program langsung berhenti mendadak (crash). Berdasarkan materi Debugging, termasuk kategori galat apakah kasus ini?',
+          options: [
+            'Runtime Error — Karena terjadi ketika program sedang dijalankan akibat lupa menulis simbol & pada scanf("%d", &lama_parkir);',
+            'Syntax Error — Karena variabel lama_parkir tidak boleh menggunakan huruf kecil.',
+            'Logical Error — Karena program berhasil mencetak hasil akhir namun angkanya keliru.',
+            'Hardware Error — Karena keyboard laptop guru tidak memiliki tombol angka 3.'
+          ],
+          correctIndex: 0,
+          explanation: 'Kesalahan yang menyebabkan program berhenti mendadak (crash) ketika sedang dieksekusi disebut Runtime Error. Pada bahasa C, lupa menulis & pada scanf membuat program menulis ke alamat memori yang tidak valid.'
+        },
+        {
+          id: 'Q10',
+          category: 'Debugging: Logical Error',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div class="text-slate-400">// Skenario 3: Parkir 1 jam pertama Rp 5.000, tiap jam berikutnya Rp 3.000/jam</div>
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> lama_parkir = <span class="text-amber-300">3</span>;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> total_tarif = <span class="text-amber-300">5000</span>;</div>
+              <div><span class="text-slate-500">3 |</span> <span class="text-indigo-400">if</span> (lama_parkir &gt; <span class="text-amber-300">1</span>) {</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">4 |</span>     total_tarif = total_tarif + (lama_parkir * <span class="text-amber-300">3000</span>);</div>
+              <div><span class="text-slate-500">5 |</span> }</div>
+              <div><span class="text-slate-500">6 |</span> printf(<span class="text-emerald-300">"Total Parkir: Rp %d\\n"</span>, total_tarif);</div>
+              <div class="mt-2 pt-2 border-t border-slate-700 text-emerald-300 text-[11px]">
+                Expected Output: Total Parkir: Rp 11000 | Actual Output di Laptop: Total Parkir: Rp 14000
+              </div>
+            </div>
+          `,
+          stem: 'Program Skenario 3 di atas berjalan lancar tanpa pesan error, tetapi menghasilkan Actual Output Rp 14000 (seharusnya Rp 11000 untuk 3 jam parkir). Jenis galat dan kode perbaikan (Fix Code) baris ke-4 yang tepat adalah...',
+          options: [
+            'Syntax Error — Ubah baris 4 menjadi: total_tarif = 5000 - 3000;',
+            'Logical Error — Ubah baris 4 menjadi: total_tarif = total_tarif + ((lama_parkir - 1) * 3000);',
+            'Runtime Error — Ubah baris 4 menjadi: total_tarif = lama_parkir / 0;',
+            'Syntax Error — Hapus kurung kurawal pada baris ke-3 dan ke-5.'
+          ],
+          correctIndex: 1,
+          explanation: 'Program berjalan tanpa eror namun hasilnya tidak sesuai harapan (Expected Output != Actual Output), sehingga termasuk Logical Error. Karena 1 jam pertama sudah dihitung Rp 5.000, maka jam tambahan adalah (lama_parkir - 1) * 3000.'
+        },
+        {
+          id: 'Q11',
+          category: 'Tabel Penelusuran Manual',
+          visualHtml: `
+            <div class="overflow-x-auto rounded-xl border border-slate-300">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-slate-800 text-white">
+                  <tr>
+                    <th class="p-2">Baris</th>
+                    <th class="p-2">Variabel / Aktivitas (Skenario 5: Bonus Sales)</th>
+                    <th class="p-2">Nilai Baru</th>
+                    <th class="p-2">Keterangan / Kondisi</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white">
+                  <tr><td class="p-2 font-bold">1</td><td class="p-2 font-mono-code">gaji_pokok</td><td class="p-2 font-mono-code">3000000</td><td class="p-2">Gaji dasar</td></tr>
+                  <tr><td class="p-2 font-bold">2</td><td class="p-2 font-mono-code">penjualan</td><td class="p-2 font-mono-code">12000000</td><td class="p-2">Input data uji</td></tr>
+                  <tr><td class="p-2 font-bold">3</td><td class="p-2 font-mono-code">bonus</td><td class="p-2 font-mono-code">0</td><td class="p-2">Nilai awal bonus</td></tr>
+                  <tr><td class="p-2 font-bold">4</td><td class="p-2 font-mono-code">if (penjualan &gt;= 10000000)</td><td class="p-2 font-mono-code text-emerald-700 font-bold">True</td><td class="p-2">12.000.000 &gt;= 10.000.000</td></tr>
+                  <tr class="bg-amber-50"><td class="p-2 font-bold">5</td><td class="p-2 font-mono-code">bonus = 500000</td><td class="p-2 font-mono-code font-bold text-indigo-700">[ ? A ? ]</td><td class="p-2">Mendapatkan bonus</td></tr>
+                  <tr class="bg-amber-50"><td class="p-2 font-bold">6</td><td class="p-2 font-mono-code">total_pendapatan = gaji_pokok + bonus</td><td class="p-2 font-mono-code font-bold text-indigo-700">[ ? B ? ]</td><td class="p-2">Total akhir</td></tr>
+                </tbody>
+              </table>
+            </div>
+          `,
+          stem: 'Perhatikan Tabel Penelusuran Manual (Manual Tracing) untuk Skenario 5 di atas! Berapakah nilai yang tepat untuk mengisi bagian [ ? A ? ] dan [ ? B ? ]?',
+          options: [
+            '[ ? A ? ] = 0 dan [ ? B ? ] = 3000000',
+            '[ ? A ? ] = 500000 dan [ ? B ? ] = 3500000',
+            '[ ? A ? ] = 500000 dan [ ? B ? ] = 12500000',
+            '[ ? A ? ] = 10000000 dan [ ? B ? ] = 13000000'
+          ],
+          correctIndex: 1,
+          explanation: 'Karena kondisi penjualan >= 10000000 bernilai True (12.000.000 >= 10.000.000), maka variabel bonus berubah menjadi 500000 ([A]), dan total_pendapatan = 3000000 + 500000 = 3500000 ([B]).'
+        },
+        {
+          id: 'Q12',
+          category: 'Debugging Operator Logika',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div class="text-slate-400">// Skenario 6: Boleh naik Roller Coaster jika tinggi minimal 140 cm DAN usia minimal 10 tahun</div>
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> tinggi_badan = <span class="text-amber-300">145</span>;</div>
+              <div><span class="text-slate-500">2 |</span> <span class="text-indigo-400">int</span> usia = <span class="text-amber-300">9</span>;</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">3 |</span> <span class="text-indigo-400">if</span> (tinggi_badan &gt;= <span class="text-amber-300">140</span> || usia &gt;= <span class="text-amber-300">10</span>) {</div>
+              <div><span class="text-slate-500">4 |</span>     printf(<span class="text-emerald-300">"Status: BOLEH NAIK\\n"</span>);</div>
+              <div><span class="text-slate-500">5 |</span> } <span class="text-indigo-400">else</span> {</div>
+              <div><span class="text-slate-500">6 |</span>     printf(<span class="text-emerald-300">"Status: TIDAK BOLEH NAIK\\n"</span>);</div>
+              <div><span class="text-slate-500">7 |</span> }</div>
+            </div>
+          `,
+          stem: 'Dengan data uji tinggi_badan = 145 dan usia = 9, seharusnya output adalah "TIDAK BOLEH NAIK". Namun kode di atas justru mencetak "BOLEH NAIK". Apa penyebab kesalahan logika pada baris ke-3?',
+          options: [
+            'Karena penulis kode menggunakan operator OR (||) yang bernilai True jika salah satu syarat terpenuhi, seharusnya menggunakan operator AND (&&).',
+            'Karena penulis kode menggunakan tanda >=, seharusnya menggunakan tanda !=.',
+            'Karena nilai tinggi_badan = 145 lebih kecil dari 140.',
+            'Karena tipe data int tidak bisa dibandingkan menggunakan operator relasional.'
+          ],
+          correctIndex: 0,
+          explanation: 'Operator || (OR) menghasilkan True jika salah satu kondisi benar (145 >= 140 bernilai True). Karena aturan wahana mewajibkan KEDUA syarat terpenuhi sekaligus, maka wajib menggunakan operator && (AND).'
+        },
+        {
+          id: 'Q13',
+          category: 'Debugging Format Output',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">float</span> total_bayar = <span class="text-amber-300">40000.50</span>;</div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">2 |</span> printf(<span class="text-emerald-300">"Total Bayar: Rp %d\\n"</span>, total_bayar);</div>
+            </div>
+          `,
+          stem: 'Ketika kode di atas dijalankan, nilai total_bayar yang bertipe float tidak tampil sebagai 40000.50 melainkan angka acak yang keliru. Bagaimana cara memperbaiki baris ke-2?',
+          options: [
+            'Mengganti format specifier %d menjadi %.2f karena variabel total_bayar bertipe float (angka desimal).',
+            'Mengganti perintah printf menjadi scanf.',
+            'Menghapus tanda kutip dua pada teks di dalam printf.',
+            'Menambahkan simbol && di depan variabel total_bayar.'
+          ],
+          correctIndex: 0,
+          explanation: 'Format specifier %d hanya diperuntukkan bagi bilangan bulat (int). Untuk menampilkan nilai bertipe float atau double dengan dua angka di belakang koma, gunakan %.2f.'
+        },
+        {
+          id: 'Q14',
+          category: 'Komparasi Sintaks 3 Bahasa',
+          visualHtml: `
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 font-mono-code text-[11px]">
+              <div class="p-3 rounded-xl bg-slate-900 text-slate-200 border border-slate-700">
+                <span class="text-indigo-400 font-bold block mb-1">Kartu Kode X</span>
+                harga = 50000<br/>
+                member = True<br/>
+                print(f"Rp {harga}")
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900 text-slate-200 border border-slate-700">
+                <span class="text-amber-400 font-bold block mb-1">Kartu Kode Y</span>
+                int harga = 50000;<br/>
+                bool member = true;<br/>
+                printf("Rp %d", harga);
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900 text-slate-200 border border-slate-700">
+                <span class="text-emerald-400 font-bold block mb-1">Kartu Kode Z</span>
+                int harga = 50000;<br/>
+                boolean member = true;<br/>
+                System.out.println(harga);
+              </div>
+            </div>
+          `,
+          stem: 'Perhatikan ketiga Kartu Kode di atas! Berdasarkan materi Sintaks 3 Bahasa, manakah urutan nama bahasa pemrograman yang tepat untuk Kartu X, Kartu Y, dan Kartu Z?',
+          options: [
+            'X = C, Y = Python, Z = Java',
+            'X = Python, Y = C, Z = Java',
+            'X = Java, Y = C, Z = Python',
+            'X = Python, Y = Java, Z = C'
+          ],
+          correctIndex: 1,
+          explanation: 'Kartu X adalah Python (tanpa deklarasi tipe data, tanpa titik koma, menggunakan print(f"...")), Kartu Y adalah Bahasa C (menggunakan bool dan printf), sedangkan Kartu Z adalah Java (menggunakan boolean dan System.out.println).'
+        },
+        {
+          id: 'Q15',
+          category: 'Debugging Kondisi Percabangan',
+          visualHtml: `
+            <div class="code-window p-4 font-mono-code text-xs space-y-1">
+              <div><span class="text-slate-500">1 |</span> <span class="text-indigo-400">int</span> status_member = <span class="text-amber-300">0</span>; <span class="text-slate-400">// 0 = Bukan Member, 1 = Member</span></div>
+              <div class="code-line-highlight px-1"><span class="text-slate-300">2 |</span> <span class="text-indigo-400">if</span> (status_member = <span class="text-amber-300">1</span>) {</div>
+              <div><span class="text-slate-500">3 |</span>     printf(<span class="text-emerald-300">"Selamat, Anda Dapat Diskon Member!\\n"</span>);</div>
+              <div><span class="text-slate-500">4 |</span> } <span class="text-indigo-400">else</span> {</div>
+              <div><span class="text-slate-500">5 |</span>     printf(<span class="text-emerald-300">"Harga Normal\\n"</span>);</div>
+              <div><span class="text-slate-500">6 |</span> }</div>
+            </div>
+          `,
+          stem: 'Walaupun status_member bernilai 0 (Bukan Member), program di atas selalu mencetak "Selamat, Anda Dapat Diskon Member!". Apa penyebab bug pada baris ke-2 dan bagaimana memperbaikinya?',
+          options: [
+            'Baris ke-2 menggunakan operator pengisian nilai (=) bukan operator relasional sama dengan (==), sehingga status_member diisi menjadi 1 (True). Perbaikannya: if (status_member == 1).',
+            'Baris ke-2 menggunakan angka 1, seharusnya menggunakan angka 100.',
+            'Tipe data int tidak bisa digunakan di dalam kurung if pada Bahasa C.',
+            'Perintah printf pada baris ke-3 harus diganti menjadi scanf.'
+          ],
+          correctIndex: 0,
+          explanation: 'Dalam Bahasa C, satu tanda sama dengan (=) adalah assignment (mengubah nilai variabel menjadi 1 yang dievaluasi sebagai True), sedangkan untuk membandingkan kesamaan dua nilai wajib menggunakan dua tanda sama dengan (==).'
+        }
+      ];
+
+      // -------------------------------------------------------------------
+      // RUNTIME STATE
+      // -------------------------------------------------------------------
+      let currentStudent = null;
+      let activeQuestions = [];
+      let currentQuestionIndex = 0;
+      let studentAnswers = {};   // { questionId: selectedOptionIndex }
+      let flaggedQuestions = {}; // { questionId: boolean }
+      let timerInterval = null;
+      let remainingSeconds = 0;
+      let startTimestamp = 0;
+
+      // -------------------------------------------------------------------
+      // DOM HELPERS & TOAST
+      // -------------------------------------------------------------------
+      const $ = (id) => document.getElementById(id);
+
+      function showToast(message, isError = false) {
+        const container = $('toast-container');
+        const dot = $('toast-icon');
+        const msg = $('toast-message');
+        msg.textContent = message;
+        dot.className = isError
+          ? 'w-2.5 h-2.5 rounded-full bg-rose-400 shrink-0'
+          : 'w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0';
+        container.classList.remove('hidden');
+        setTimeout(() => {
+          container.classList.add('hidden');
+        }, 3200);
+      }
+
+      function switchMainView(viewId) {
+        const views = ['view-student-login', 'view-student-exam', 'view-student-result', 'view-teacher-dashboard'];
+        views.forEach((v) => {
+          if (v === viewId) {
+            $(v).classList.remove('hidden');
+          } else {
+            $(v).classList.add('hidden');
+          }
+        });
+
+        // Highlight active top nav button
+        if (viewId === 'view-teacher-dashboard') {
+          $('btn-nav-teacher').className = 'px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-amber-500 text-slate-950 hover:bg-amber-400 transition flex items-center gap-1.5';
+          $('btn-nav-student').className = 'px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition flex items-center gap-1.5';
+        } else {
+          $('btn-nav-student').className = 'px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-500 transition flex items-center gap-1.5';
+          $('btn-nav-teacher').className = 'px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition flex items-center gap-1.5';
+        }
+      }
+
+      function updateLoginSpecBadges() {
+        $('info-duration-label').textContent = `${appSettings.durationMinutes} Menit`;
+        $('info-shuffle-label').textContent = appSettings.shuffleQuestions ? 'Diacak Otomatis' : 'Berurutan';
+      }
+
+      // -------------------------------------------------------------------
+      // FISHER-YATES SHUFFLE
+      // -------------------------------------------------------------------
+      function shuffleArray(arr) {
+        const copy = arr.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const temp = copy[i];
+          copy[i] = copy[j];
+          copy[j] = temp;
+        }
+        return copy;
+      }
+
+      // -------------------------------------------------------------------
+      // EXAM START & TIMER LOGIC
+      // -------------------------------------------------------------------
+      function startExam(name, studentClass, absen) {
+        currentStudent = {
+          name: name.trim(),
+          studentClass: studentClass.trim().toUpperCase(),
+          absen: String(absen).trim()
+        };
+
+        activeQuestions = appSettings.shuffleQuestions
+          ? shuffleArray(QUESTION_BANK)
+          : QUESTION_BANK.slice();
+
+        currentQuestionIndex = 0;
+        studentAnswers = {};
+        flaggedQuestions = {};
+        startTimestamp = Date.now();
+        remainingSeconds = appSettings.durationMinutes * 60;
+
+        $('exam-student-name').textContent = currentStudent.name;
+        $('exam-student-class').textContent = currentStudent.studentClass;
+        $('exam-student-absen').textContent = `No. Absen: ${currentStudent.absen}`;
+
+        // Start Timer
+        if (timerInterval) clearInterval(timerInterval);
+        $('navbar-timer-box').classList.remove('hidden');
+        $('navbar-timer-box').classList.add('flex');
+        updateTimerDisplay();
+
+        timerInterval = setInterval(() => {
+          remainingSeconds--;
+          updateTimerDisplay();
+          if (remainingSeconds <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            showToast('Waktu pengerjaan habis! Jawabanmu dikumpulkan otomatis.');
+            finalizeAndSubmitExam(true);
+          }
+        }, 1000);
+
+        switchMainView('view-student-exam');
+        renderCurrentQuestion();
+        renderNavigatorGrid();
+      }
+
+      function updateTimerDisplay() {
+        const mins = Math.floor(Math.max(0, remainingSeconds) / 60);
+        const secs = Math.max(0, remainingSeconds) % 60;
+        const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        const timerEl = $('navbar-timer-text');
+        timerEl.textContent = formatted;
+        if (remainingSeconds <= 300) {
+          timerEl.className = 'font-mono-code font-bold text-sm sm:text-base text-rose-400 timer-urgent';
+        } else {
+          timerEl.className = 'font-mono-code font-bold text-sm sm:text-base text-amber-400';
+        }
+      }
+
+      // -------------------------------------------------------------------
+      // RENDER QUESTION & NAVIGATOR
+      // -------------------------------------------------------------------
+      function renderCurrentQuestion() {
+        const q = activeQuestions[currentQuestionIndex];
+        if (!q) return;
+
+        const total = activeQuestions.length;
+        $('q-number-badge').textContent = `Soal ${currentQuestionIndex + 1} / ${total}`;
+        $('q-category-badge').textContent = q.category;
+
+        // Flag status
+        const isFlagged = !!flaggedQuestions[q.id];
+        $('flag-label').textContent = isFlagged ? 'Ditandai Ragu-ragu' : 'Tandai Ragu-ragu';
+        $('btn-flag-question').className = isFlagged
+          ? 'px-3 py-1.5 rounded-lg border border-amber-500 bg-amber-400 text-slate-950 text-xs font-bold transition flex items-center gap-1.5'
+          : 'px-3 py-1.5 rounded-lg border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100 text-xs font-semibold transition flex items-center gap-1.5';
+
+        // Visual stimulus
+        const visualBox = $('q-visual-container');
+        if (q.visualHtml) {
+          visualBox.innerHTML = q.visualHtml;
+          visualBox.classList.remove('hidden');
+        } else {
+          visualBox.innerHTML = '';
+          visualBox.classList.add('hidden');
+        }
+
+        // Question stem
+        $('q-stem-text').textContent = q.stem;
+
+        // Options
+        const optionsBox = $('q-options-container');
+        optionsBox.innerHTML = '';
+        const letters = ['A', 'B', 'C', 'D'];
+        const chosenIdx = studentAnswers[q.id];
+
+        q.options.forEach((optText, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          const isSelected = chosenIdx === idx;
+          btn.className = `option-card w-full text-left p-3.5 rounded-xl border ${
+            isSelected ? 'selected border-indigo-600' : 'border-slate-200 bg-white'
+          } flex items-start gap-3`;
+
+          const badge = document.createElement('span');
+          badge.className = `w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 ${
+            isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-700'
+          }`;
+          badge.textContent = letters[idx];
+
+          const textSpan = document.createElement('span');
+          textSpan.className = 'text-xs sm:text-sm font-medium text-slate-800 leading-relaxed font-mono-code';
+          textSpan.textContent = optText;
+
+          btn.appendChild(badge);
+          btn.appendChild(textSpan);
+
+          btn.addEventListener('click', () => {
+            studentAnswers[q.id] = idx;
+            renderCurrentQuestion();
+            renderNavigatorGrid();
+          });
+
+          optionsBox.appendChild(btn);
+        });
+
+        // Prev / Next buttons
+        $('btn-prev-q').disabled = currentQuestionIndex === 0;
+        if (currentQuestionIndex === total - 1) {
+          $('btn-next-q').classList.add('hidden');
+          $('btn-open-submit-modal').classList.remove('hidden');
+        } else {
+          $('btn-next-q').classList.remove('hidden');
+          $('btn-open-submit-modal').classList.add('hidden');
+        }
+      }
+
+      function renderNavigatorGrid() {
+        const grid = $('question-nav-grid');
+        grid.innerHTML = '';
+        let answeredCount = 0;
+
+        activeQuestions.forEach((q, idx) => {
+          const isAnswered = studentAnswers[q.id] !== undefined;
+          if (isAnswered) answeredCount++;
+          const isFlagged = !!flaggedQuestions[q.id];
+          const isCurrent = idx === currentQuestionIndex;
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          let colorClass = 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200';
+          if (isFlagged) {
+            colorClass = 'bg-amber-400 text-slate-950 border-amber-500 font-bold';
+          } else if (isAnswered) {
+            colorClass = 'bg-indigo-600 text-white border-indigo-600 font-bold';
+          }
+          const ringClass = isCurrent ? 'ring-2 ring-offset-1 ring-slate-900' : '';
+          btn.className = `h-9 rounded-lg border text-xs font-semibold transition ${colorClass} ${ringClass}`;
+          btn.textContent = idx + 1;
+
+          btn.addEventListener('click', () => {
+            currentQuestionIndex = idx;
+            renderCurrentQuestion();
+            renderNavigatorGrid();
+          });
+
+          grid.appendChild(btn);
+        });
+
+        $('exam-answered-count').textContent = `${answeredCount} / ${activeQuestions.length} Terjawab`;
+      }
+
+      // -------------------------------------------------------------------
+      // SUBMIT EXAM & SCORE CALCULATION (SCORE ONLY VIEW)
+      // -------------------------------------------------------------------
+      function openSubmitConfirmationModal() {
+        const total = activeQuestions.length;
+        const answered = Object.keys(studentAnswers).length;
+        const unanswered = total - answered;
+        const summaryEl = $('modal-submit-summary');
+
+        if (unanswered > 0) {
+          summaryEl.textContent = `Kamu baru menjawab ${answered} dari ${total} soal (masih ada ${unanswered} soal yang belum dijawab). Apakah kamu yakin ingin mengumpulkan jawaban sekarang?`;
+        } else {
+          summaryEl.textContent = `Seluruh ${total} soal telah terjawab. Setelah dikumpulkan, kamu akan langsung melihat Skor Akhir dan tidak dapat mengubah jawaban lagi. Kumpulkan sekarang?`;
+        }
+        $('modal-confirm-submit').classList.remove('hidden');
+      }
+
+      function finalizeAndSubmitExam() {
+        $('modal-confirm-submit').classList.add('hidden');
+        if (timerInterval) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+        }
+        $('navbar-timer-box').classList.add('hidden');
+        $('navbar-timer-box').classList.remove('flex');
+
+        // Calculate score keyed by canonical QUESTION_BANK
+        let correctCount = 0;
+        const canonicalAnswers = {};
+        QUESTION_BANK.forEach((q) => {
+          const ans = studentAnswers[q.id];
+          canonicalAnswers[q.id] = ans !== undefined ? ans : -1;
+          if (ans === q.correctIndex) {
+            correctCount++;
+          }
+        });
+
+        const totalQuestions = QUESTION_BANK.length;
+        const finalScore = Math.round((correctCount / totalQuestions) * 100);
+        const elapsedSec = Math.max(1, Math.round((Date.now() - startTimestamp) / 1000));
+        const elapsedMin = Math.floor(elapsedSec / 60);
+        const remSec = elapsedSec % 60;
+        const durationText = `${elapsedMin}m ${remSec}d`;
+
+        const record = {
+          id: 'REC-' + Date.now() + '-' + Math.floor(Math.random() * 900 + 100),
+          timestamp: new Date().toLocaleString('id-ID'),
+          name: currentStudent.name,
+          studentClass: currentStudent.studentClass,
+          absen: currentStudent.absen,
+          correct: correctCount,
+          total: totalQuestions,
+          score: finalScore,
+          duration: durationText,
+          answers: canonicalAnswers
+        };
+
+        // Save to localStorage for Teacher Mode
+        saveStudentRecord(record);
+
+        // Encode portable token so student can also send to teacher across devices
+        const tokenPayload = {
+          n: record.name,
+          c: record.studentClass,
+          a: record.absen,
+          k: record.correct,
+          s: record.score,
+          d: record.duration,
+          t: record.timestamp,
+          w: record.answers
+        };
+        const tokenString = 'KKA-' + btoa(unescape(encodeURIComponent(JSON.stringify(tokenPayload))));
+
+        // Populate Student Result View (SCORE ONLY - NO ANSWER KEY LEAK)
+        $('result-score-number').textContent = finalScore;
+        const isPassed = finalScore >= appSettings.kkm;
+        const badgeEl = $('result-status-badge');
+        badgeEl.textContent = isPassed
+          ? `TUNTAS (≥ KKM ${appSettings.kkm})`
+          : `BELUM TUNTAS (< KKM ${appSettings.kkm})`;
+        badgeEl.className = isPassed
+          ? 'inline-block mt-2 px-3 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800'
+          : 'inline-block mt-2 px-3 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800';
+
+        $('result-student-name').textContent = record.name;
+        $('result-student-class-absen').textContent = `${record.studentClass} / No. Absen ${record.absen}`;
+        $('result-correct-count').textContent = `${record.correct} dari ${record.total} Soal`;
+        $('result-time-spent').textContent = record.duration;
+        $('result-token-textarea').value = tokenString;
+
+        switchMainView('view-student-result');
+      }
+
+      // -------------------------------------------------------------------
+      // TEACHER RECORDS STORAGE & PORTABLE TOKEN IMPORT
+      // -------------------------------------------------------------------
+      function getStudentRecords() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY_RECORDS);
+          if (!raw) return [];
+          return JSON.parse(raw);
+        } catch (e) {
+          return window._fallbackRecords || [];
+        }
+      }
+
+      function saveStudentRecord(newRec) {
+        const list = getStudentRecords();
+        list.push(newRec);
+        window._fallbackRecords = list;
+        try {
+          localStorage.setItem(STORAGE_KEY_RECORDS, JSON.stringify(list));
+        } catch (e) {}
+      }
+
+      function overwriteStudentRecords(list) {
+        window._fallbackRecords = list;
+        try {
+          localStorage.setItem(STORAGE_KEY_RECORDS, JSON.stringify(list));
+        } catch (e) {}
+      }
+
+      function importTokenStrings(rawInput) {
+        if (!rawInput || !rawInput.trim()) {
+          showToast('Masukkan kode bukti KKA-... terlebih dahulu.', true);
+          return;
+        }
+        const tokens = rawInput.trim().split(/\s+/);
+        let importedCount = 0;
+        const list = getStudentRecords();
+
+        tokens.forEach((tok) => {
+          const clean = tok.trim();
+          if (!clean.startsWith('KKA-')) return;
+          try {
+            const b64 = clean.slice(4);
+            const jsonStr = decodeURIComponent(escape(atob(b64)));
+            const data = JSON.parse(jsonStr);
+            if (data && data.n && data.s !== undefined) {
+              list.push({
+                id: 'IMP-' + Date.now() + '-' + Math.floor(Math.random() * 999),
+                timestamp: data.t || new Date().toLocaleString('id-ID'),
+                name: data.n,
+                studentClass: data.c || '-',
+                absen: String(data.a || '-'),
+                correct: Number(data.k || 0),
+                total: QUESTION_BANK.length,
+                score: Number(data.s || 0),
+                duration: data.d || '-',
+                answers: data.w || {}
+              });
+              importedCount++;
+            }
+          } catch (err) {}
+        });
+
+        if (importedCount > 0) {
+          overwriteStudentRecords(list);
+          $('input-import-token').value = '';
+          renderTeacherRekap();
+          showToast(`Berhasil mengimpor ${importedCount} data nilai siswa ke tabel rekap!`);
+        } else {
+          showToast('Format kode bukti tidak valid. Pastikan diawali KKA-...', true);
+        }
+      }
+
+      // -------------------------------------------------------------------
+      // RENDER TEACHER DASHBOARD (REKAP, ANSWER KEY, SETTINGS)
+      // -------------------------------------------------------------------
+      function renderTeacherRekap() {
+        const allRecords = getStudentRecords();
+
+        // Populate class filter options
+        const filterSelect = $('filter-class-select');
+        const currentFilter = filterSelect.value || 'ALL';
+        const uniqueClasses = Array.from(new Set(allRecords.map((r) => r.studentClass))).sort();
+        filterSelect.innerHTML = '<option value="ALL">Semua Kelas</option>';
+        uniqueClasses.forEach((cls) => {
+          const opt = document.createElement('option');
+          opt.value = cls;
+          opt.textContent = `Kelas ${cls}`;
+          if (cls === currentFilter) opt.selected = true;
+          filterSelect.appendChild(opt);
+        });
+
+        const filtered = currentFilter === 'ALL'
+          ? allRecords
+          : allRecords.filter((r) => r.studentClass === currentFilter);
+
+        // Update metrics
+        $('stat-total-students').textContent = filtered.length;
+        if (filtered.length === 0) {
+          $('stat-avg-score').textContent = '0.0';
+          $('stat-max-score').textContent = '0';
+          $('stat-pass-rate').textContent = '0%';
+        } else {
+          const sum = filtered.reduce((acc, r) => acc + Number(r.score), 0);
+          const avg = (sum / filtered.length).toFixed(1);
+          const max = Math.max(...filtered.map((r) => Number(r.score)));
+          const passed = filtered.filter((r) => Number(r.score) >= appSettings.kkm).length;
+          const passRate = Math.round((passed / filtered.length) * 100);
+          $('stat-avg-score').textContent = avg;
+          $('stat-max-score').textContent = max;
+          $('stat-pass-rate').textContent = `${passRate}%`;
+        }
+
+        // Populate table rows
+        const tbody = $('teacher-rekap-tbody');
+        tbody.innerHTML = '';
+
+        if (filtered.length === 0) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td colspan="9" class="py-8 text-center text-slate-400 text-xs">Belum ada data nilai siswa. Siswa yang selesai mengerjakan di perangkat ini atau diimpor lewat Kode Bukti akan tampil di sini.</td>`;
+          tbody.appendChild(tr);
+          return;
+        }
+
+        filtered.forEach((rec, idx) => {
+          const isPass = Number(rec.score) >= appSettings.kkm;
+          const tr = document.createElement('tr');
+          tr.className = 'hover:bg-slate-50';
+          tr.innerHTML = `
+            <td class="py-3 px-4 font-semibold text-slate-600">${idx + 1}</td>
+            <td class="py-3 px-4 font-bold text-slate-900">${rec.name}</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-semibold text-xs">${rec.studentClass}</span></td>
+            <td class="py-3 px-4 font-mono-code">${rec.absen}</td>
+            <td class="py-3 px-4 font-mono-code">${rec.correct} / ${rec.total}</td>
+            <td class="py-3 px-4 font-extrabold text-indigo-600 text-sm">${rec.score}</td>
+            <td class="py-3 px-4">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+                isPass ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+              }">${isPass ? 'TUNTAS' : 'REMEDIAL'}</span>
+            </td>
+            <td class="py-3 px-4 text-xs text-slate-500">${rec.duration}</td>
+            <td class="py-3 px-4 text-right">
+              <button type="button" data-rec-id="${rec.id}" class="btn-inspect-student px-3 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold text-xs transition">
+                Detail Jawaban
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        // Attach detail modal listeners
+        tbody.querySelectorAll('.btn-inspect-student').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const recId = btn.getAttribute('data-rec-id');
+            const target = allRecords.find((r) => r.id === recId);
+            if (target) openStudentDetailModal(target);
+          });
+        });
+      }
+
+      function openStudentDetailModal(rec) {
+        $('detail-modal-title').textContent = `Rincian Jawaban: ${rec.name} (${rec.studentClass} - Absen ${rec.absen})`;
+        $('detail-modal-subtitle').textContent = `Skor Akhir: ${rec.score} (${rec.correct}/${rec.total} Benar) • Durasi: ${rec.duration}`;
+
+        const body = $('detail-modal-body');
+        body.innerHTML = '';
+        const letters = ['A', 'B', 'C', 'D'];
+
+        QUESTION_BANK.forEach((q, idx) => {
+          const studentChoice = rec.answers ? rec.answers[q.id] : -1;
+          const isCorrect = studentChoice === q.correctIndex;
+          const studentText = studentChoice >= 0 && q.options[studentChoice]
+            ? `${letters[studentChoice]}. ${q.options[studentChoice]}`
+            : 'Tidak Dijawab';
+          const correctText = `${letters[q.correctIndex]}. ${q.options[q.correctIndex]}`;
+
+          const card = document.createElement('div');
+          card.className = `p-3.5 rounded-xl border ${
+            isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'
+          } space-y-1.5`;
+          card.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800">Soal #${idx + 1} (${q.category})</span>
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold ${
+                isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+              }">${isCorrect ? '✓ BENAR' : '✕ SALAH'}</span>
+            </div>
+            <p class="text-slate-700">${q.stem}</p>
+            <p class="font-mono-code text-[11px] text-slate-600"><strong>Jawaban Siswa:</strong> ${studentText}</p>
+            ${!isCorrect ? `<p class="font-mono-code text-[11px] text-emerald-800"><strong>Kunci Jawaban:</strong> ${correctText}</p>` : ''}
+          `;
+          body.appendChild(card);
+        });
+
+        $('modal-student-detail').classList.remove('hidden');
+      }
+
+      function renderTeacherAnswerKey() {
+        const container = $('teacher-answer-key-list');
+        container.innerHTML = '';
+        const letters = ['A', 'B', 'C', 'D'];
+
+        QUESTION_BANK.forEach((q, idx) => {
+          const card = document.createElement('div');
+          card.className = 'bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3';
+
+          const optionsHtml = q.options.map((opt, oIdx) => {
+            const isKey = oIdx === q.correctIndex;
+            return `
+              <div class="p-2.5 rounded-xl border text-xs font-mono-code flex items-center gap-2.5 ${
+                isKey ? 'bg-emerald-50 border-emerald-400 text-emerald-950 font-bold' : 'bg-slate-50 border-slate-200 text-slate-600'
+              }">
+                <span class="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold ${
+                  isKey ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'
+                }">${letters[oIdx]}</span>
+                <span>${opt}</span>
+                ${isKey ? '<span class="ml-auto text-[11px] font-sans font-bold text-emerald-700 uppercase">✓ Kunci Jawaban</span>' : ''}
+              </div>
+            `;
+          }).join('');
+
+          card.innerHTML = `
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold text-xs">Kode Soal ${q.id} (Urutan Standar #${idx + 1})</span>
+              <span class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full">${q.category}</span>
+            </div>
+            ${q.visualHtml ? `<div>${q.visualHtml}</div>` : ''}
+            <p class="text-sm font-semibold text-slate-800">${q.stem}</p>
+            <div class="space-y-1.5">${optionsHtml}</div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950 leading-relaxed">
+              <strong>Pembahasan Guru:</strong> ${q.explanation}
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      // -------------------------------------------------------------------
+      // EVENT LISTENERS INITIALIZATION
+      // -------------------------------------------------------------------
+      function initEvents() {
+        updateLoginSpecBadges();
+
+        // Cheat sheet toggle on login page
+        $('btn-toggle-cheat-sheet').addEventListener('click', () => {
+          const box = $('box-cheat-sheet');
+          const isHidden = box.classList.contains('hidden');
+          if (isHidden) {
+            box.classList.remove('hidden');
+            $('cheat-sheet-arrow').textContent = '▲';
+          } else {
+            box.classList.add('hidden');
+            $('cheat-sheet-arrow').textContent = '▼';
+          }
+        });
+
+        // Start exam form submit
+        $('form-student-start').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = $('input-student-name').value.trim();
+          const sClass = $('input-student-class').value.trim();
+          const absen = $('input-student-absen').value.trim();
+          const errBox = $('login-error-msg');
+
+          if (!name || !sClass || !absen) {
+            errBox.textContent = 'Harap lengkapi Nama Lengkap, Kelas, dan Nomor Absen sebelum memulai ujian.';
+            errBox.classList.remove('hidden');
+            return;
+          }
+          errBox.classList.add('hidden');
+          startExam(name, sClass, absen);
+        });
+
+        // Question navigation buttons
+        $('btn-prev-q').addEventListener('click', () => {
+          if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderCurrentQuestion();
+            renderNavigatorGrid();
+          }
+        });
+
+        $('btn-next-q').addEventListener('click', () => {
+          if (currentQuestionIndex < activeQuestions.length - 1) {
+            currentQuestionIndex++;
+            renderCurrentQuestion();
+            renderNavigatorGrid();
+          }
+        });
+
+        $('btn-flag-question').addEventListener('click', () => {
+          const q = activeQuestions[currentQuestionIndex];
+          if (!q) return;
+          flaggedQuestions[q.id] = !flaggedQuestions[q.id];
+          renderCurrentQuestion();
+          renderNavigatorGrid();
+        });
+
+        // Submit modal triggers
+        $('btn-open-submit-modal').addEventListener('click', openSubmitConfirmationModal);
+        $('btn-sidebar-submit').addEventListener('click', openSubmitConfirmationModal);
+        $('btn-cancel-submit').addEventListener('click', () => {
+          $('modal-confirm-submit').classList.add('hidden');
+        });
+        $('btn-confirm-final-submit').addEventListener('click', () => {
+          finalizeAndSubmitExam();
+        });
+
+        // Student result actions
+        $('btn-copy-token').addEventListener('click', () => {
+          const textarea = $('result-token-textarea');
+          textarea.select();
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(textarea.value);
+            } else {
+              document.execCommand('copy');
+            }
+          } catch (err) {
+            try { document.execCommand('copy'); } catch (e) {}
+          }
+          showToast('Kode Bukti Nilai berhasil disalin!');
+        });
+
+        $('btn-download-receipt').addEventListener('click', () => {
+          const token = $('result-token-textarea').value;
+          const name = $('result-student-name').textContent;
+          const cls = $('result-student-class-absen').textContent;
+          const score = $('result-score-number').textContent;
+          const content = [
+            '====================================================',
+            'BUKTI HASIL PENILAIAN INDIVIDU (KKA-LMS BAHASA C)',
+            '====================================================',
+            `Nama Siswa    : ${name}`,
+            `Kelas / Absen : ${cls}`,
+            `Skor Akhir    : ${score} / 100`,
+            '----------------------------------------------------',
+            'KODE BUKTI UNTUK DIIMPOR GURU:',
+            token,
+            '===================================================='
+          ].join('\n');
+
+          const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `Bukti_Nilai_${name.replace(/\s+/g, '_')}.txt`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('Kartu Bukti Nilai berhasil diunduh!');
+        });
+
+        $('btn-reset-new-student').addEventListener('click', () => {
+          $('input-student-name').value = '';
+          $('input-student-absen').value = '';
+          switchMainView('view-student-login');
+        });
+
+        // Top Navbar navigation
+        $('btn-nav-student').addEventListener('click', () => {
+          if (timerInterval) {
+            switchMainView('view-student-exam');
+          } else {
+            switchMainView('view-student-login');
+          }
+        });
+
+        $('btn-nav-teacher').addEventListener('click', () => {
+          $('input-pin-code').value = '';
+          $('pin-error-text').classList.add('hidden');
+          $('modal-teacher-pin').classList.remove('hidden');
+          setTimeout(() => $('input-pin-code').focus(), 60);
+        });
+
+        $('btn-close-pin-modal').addEventListener('click', () => {
+          $('modal-teacher-pin').classList.add('hidden');
+        });
+        $('btn-cancel-pin').addEventListener('click', () => {
+          $('modal-teacher-pin').classList.add('hidden');
+        });
+
+        $('form-verify-pin').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const entered = $('input-pin-code').value.trim();
+          if (entered === appSettings.teacherPin) {
+            $('modal-teacher-pin').classList.add('hidden');
+            renderTeacherRekap();
+            renderTeacherAnswerKey();
+            $('setting-duration').value = appSettings.durationMinutes;
+            $('setting-kkm').value = appSettings.kkm;
+            $('setting-shuffle').checked = appSettings.shuffleQuestions;
+            $('setting-pin').value = appSettings.teacherPin;
+            switchMainView('view-teacher-dashboard');
+            showToast('Berhasil masuk ke Mode Guru.');
+          } else {
+            $('pin-error-text').classList.remove('hidden');
+          }
+        });
+
+        // Teacher Sub-tabs
+        function switchTeacherSubTab(activeSub) {
+          const tabs = [
+            { btn: 'tab-btn-rekap', view: 'teacher-subview-rekap' },
+            { btn: 'tab-btn-kunci', view: 'teacher-subview-kunci' },
+            { btn: 'tab-btn-setting', view: 'teacher-subview-setting' }
+          ];
+          tabs.forEach((t) => {
+            if (t.view === activeSub) {
+              $(t.view).classList.remove('hidden');
+              $(t.btn).className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white transition';
+            } else {
+              $(t.view).classList.add('hidden');
+              $(t.btn).className = 'px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition';
+            }
+          });
+        }
+
+        $('tab-btn-rekap').addEventListener('click', () => {
+          renderTeacherRekap();
+          switchTeacherSubTab('teacher-subview-rekap');
+        });
+        $('tab-btn-kunci').addEventListener('click', () => {
+          renderTeacherAnswerKey();
+          switchTeacherSubTab('teacher-subview-kunci');
+        });
+        $('tab-btn-setting').addEventListener('click', () => {
+          switchTeacherSubTab('teacher-subview-setting');
+        });
+
+        // Teacher Rekap actions
+        $('filter-class-select').addEventListener('change', renderTeacherRekap);
+
+        $('btn-import-token').addEventListener('click', () => {
+          importTokenStrings($('input-import-token').value);
+        });
+
+        $('btn-load-demo-students').addEventListener('click', () => {
+          const list = getStudentRecords();
+          const demoStudents = [
+            {
+              id: 'DEMO-1-' + Date.now(),
+              timestamp: new Date().toLocaleString('id-ID'),
+              name: 'Alya Putri Rahmawati',
+              studentClass: 'X-1',
+              absen: '04',
+              correct: 14,
+              total: 15,
+              score: 93,
+              duration: '18m 42d',
+              answers: { Q1:1, Q2:2, Q3:0, Q4:1, Q5:2, Q6:2, Q7:2, Q8:1, Q9:0, Q10:1, Q11:1, Q12:0, Q13:0, Q14:1, Q15:1 }
+            },
+            {
+              id: 'DEMO-2-' + Date.now(),
+              timestamp: new Date().toLocaleString('id-ID'),
+              name: 'Dimas Pratama Wijaya',
+              studentClass: 'X-1',
+              absen: '11',
+              correct: 12,
+              total: 15,
+              score: 80,
+              duration: '22m 15d',
+              answers: { Q1:1, Q2:2, Q3:0, Q4:1, Q5:1, Q6:2, Q7:2, Q8:1, Q9:0, Q10:0, Q11:1, Q12:0, Q13:0, Q14:1, Q15:0 }
+            },
+            {
+              id: 'DEMO-3-' + Date.now(),
+              timestamp: new Date().toLocaleString('id-ID'),
+              name: 'Rizky Maulana',
+              studentClass: 'X-2',
+              absen: '27',
+              correct: 10,
+              total: 15,
+              score: 67,
+              duration: '25m 09d',
+              answers: { Q1:0, Q2:2, Q3:0, Q4:2, Q5:2, Q6:1, Q7:2, Q8:1, Q9:0, Q10:1, Q11:0, Q12:0, Q13:0, Q14:0, Q15:0 }
+            }
+          ];
+          overwriteStudentRecords(list.concat(demoStudents));
+          renderTeacherRekap();
+          showToast('3 data simulasi siswa berhasil ditambahkan ke tabel rekap.');
+        });
+
+        $('btn-export-csv').addEventListener('click', () => {
+          const records = getStudentRecords();
+          if (records.length === 0) {
+            showToast('Belum ada data nilai untuk diekspor.', true);
+            return;
+          }
+          const headers = ['No', 'Waktu Selesai', 'Nama Lengkap', 'Kelas', 'No Absen', 'Benar', 'Total Soal', 'Skor Akhir', 'Status KKM', 'Durasi'];
+          const rows = records.map((r, i) => [
+            i + 1,
+            `"${r.timestamp}"`,
+            `"${r.name.replace(/"/g, '""')}"`,
+            `"${r.studentClass}"`,
+            r.absen,
+            r.correct,
+            r.total,
+            r.score,
+            r.score >= appSettings.kkm ? 'TUNTAS' : 'REMEDIAL',
+            `"${r.duration}"`
+          ]);
+          const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
+          const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'Rekap_Nilai_Sintaks_dan_Debugging_C.csv';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          showToast('File CSV Rekapitulasi Nilai berhasil diunduh!');
+        });
+
+        $('btn-clear-records').addEventListener('click', () => {
+          overwriteStudentRecords([]);
+          renderTeacherRekap();
+          showToast('Seluruh daftar rekap nilai telah dikosongkan.');
+        });
+
+        $('btn-close-detail-modal').addEventListener('click', () => {
+          $('modal-student-detail').classList.add('hidden');
+        });
+
+        // Teacher Settings Form
+        $('form-teacher-settings').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const dur = parseInt($('setting-duration').value, 10) || 30;
+          const kkm = parseInt($('setting-kkm').value, 10) || 75;
+          const shuf = $('setting-shuffle').checked;
+          const pin = $('setting-pin').value.trim() || '1234';
+
+          appSettings = {
+            durationMinutes: Math.min(120, Math.max(5, dur)),
+            kkm: Math.min(100, Math.max(10, kkm)),
+            shuffleQuestions: shuf,
+            teacherPin: pin
+          };
+          try {
+            localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(appSettings));
+          } catch (err) {}
+
+          updateLoginSpecBadges();
+          renderTeacherRekap();
+          showToast('Pengaturan ujian & PIN Guru berhasil disimpan!');
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initEvents);
+      } else {
+        initEvents();
+      }
+    })();
+  </script>
+</body>
+</html>
